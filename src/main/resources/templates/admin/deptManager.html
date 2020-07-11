@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>部门管理</title>
+	<meta charset="UTF-8">
+	<link href="/web/css/Style1.css" rel="stylesheet" type="text/css" />
+	<link id="easyuiTheme" rel="Stylesheet" type="text/css" href="/jquery-easyui-1.4.5/themes/default/easyui.css" />
+	<link rel="Stylesheet" type="text/css" href="/jquery-easyui-1.4.5/themes/icon.css" />
+	<script src="/web/js/jquery-1.10.2.js"></script>
+	<script language="javascript" type="text/javascript" src="/jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+	<script language="javascript" type="text/javascript" src="/jquery-easyui-1.4.5/jquery.easyui.extend.js"></script>
+	<script language="javascript" type="text/javascript" src="/plugin/jquery.cookie.js"></script>
+	<script language="javascript" type="text/javascript" src="/jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+	<script language="javascript" type="text/javascript" src="/plugin/formvalidator/formValidator-4.1.3.js"></script>
+	<script language="javascript" type="text/javascript" src="/plugin/formvalidator/formValidatorRegex.js"></script>
+	<script language="javascript" type="text/javascript" src="/plugin/keyboardoperation.js"></script>
+	<script type="text/javascript" language="javascript">
+        var Cfg = { 'tableId': 'tabData', 'dlgId': 'dlgSave' };
+
+        $(window).resize(function () {
+            $('#' + Cfg.tableId).datagrid('resize');
+        });
+
+        $(function () {
+            //表格
+            InitGrid();
+            //按钮事件
+            InitBtnEvent();
+        });
+
+        function InitGrid() {
+            $('#' + Cfg.tableId).treegrid({
+                title: '部门列表',
+                iconCls: 'icon-dept',
+                nowrap: true,
+                autoRowHeight: false,
+                striped: true,
+                collapsible: false,
+                fit: true,
+                loadMsg: "数据加载中，请稍后...",
+                url: '/sys/dept/getDepart?r=' + (new Date()).getTime(),
+                remoteSort: false,
+                idField: 'deptId',
+                treeField: 'deptName',
+                columns: [
+                    [
+                    { field: 'deptId', width: 0, hidden: true, title: '主键', align: 'center' },
+                    { field: 'deptCode', width: $(this).width() * 0.10, title: '部门编码', align: 'center' },
+                    { field: 'deptName', width: $(this).width() * 0.2, title: '部门名称', align: 'left' },
+                    { field: 'deptNameJC', width: $(this).width() * 0.1, title: '部门简称', align: 'center' }
+                ]
+				],
+                pagination: false,
+                rownumbers: true,
+                toolbar: "#tb"
+            });
+        }
+
+        function InitBtnEvent() {
+            //添加
+            $('#btnAdd').click(function () {
+                InitForm(1, 0);
+            });
+            //修改
+            $('#btnMod').click(function () {
+                var rows = $('#' + Cfg.tableId).datagrid('getSelections');
+                if (rows.length != 1) {
+                    $.messager.alert('提示信息', '请选择一条要修改的数据！', 'info');
+                    return false;
+                }
+                else {
+                    InitForm(2, rows[0].deptId);
+                }
+            });
+            //删除
+            $('#btnDel').click(function () {
+                var rows = $('#' + Cfg.tableId).datagrid('getSelections');
+                if (rows.length == 0) {
+                    $.messager.alert('提示信息', '请选择一条要删除的数据！', 'info');
+                    return false;
+                }
+                else {
+                    $.messager.confirm('系统提示', '您确定删除部门' + rows[0].deptName + '吗?', function (r) {
+                        if (r) {
+                            $.get("/sys/dept/deleteDept?Ids=" + rows[0].deptId + "&Random=" + new Date().getTime(),
+                                function (data) {
+                                    if (data == "9") {
+                                        $.messager.alert('提示信息', '程序出现异常：请联系管理员！', 'error');
+                                    }
+                                    else {
+                                        $.messager.alert('提示信息', data, 'info',
+                                            function () {
+                                                $('#' + Cfg.tableId).treegrid('clearSelections');
+                                                $('#' + Cfg.tableId).treegrid('reload');
+                                            });
+                                    }
+                                });
+                        }
+                    });
+                }
+            });
+            //保存
+            $('#btnSave').click(function () {
+                $('#formData').form('submit', {
+                    url: '/sys/dept/saveDept?r=' + (new Date()).getTime(),
+
+                    onSubmit: function () {
+                        var isValidate_ = $(this).form("enableValidation").form("validate");
+                        return isValidate_;
+                    },
+                    success: function (data) {
+                        if (data == "9") {
+                            $.messager.alert('提示信息', '程序出现异常：请联系管理员！', 'error');
+                        }
+                        if (data == "2") {
+                            $.messager.alert('提示信息', '部门名称重复，请重新修改！', 'error');
+                        }
+                        else {
+                            $.messager.alert('提示信息', data, 'info',
+                                function () {
+                                    $('#' + Cfg.dlgId).dialog('close');
+                                    $('#' + Cfg.tableId).treegrid('reload');
+                                });
+                        }
+                    }
+                });
+            });
+        }
+
+        function InitForm(type, deptid) {
+
+            $('#formData').form("clear");
+
+            if (type == 1) {
+                $('#' + Cfg.dlgId).dialog('setTitle', '添加部门');
+                $("input[name=FristPage]:eq(1)").attr("checked", 'checked');
+                //加载部门根节点
+                $('#parentDeptId').combotree({ url: '/sys/dept/getDepart?isHome=1&deptId=0&r=' + (new Date()).getTime() });
+                $('#parentDeptId').combotree('setValue', 0);
+
+                $("#deptName").blur();
+                $('#deptCode').blur();
+            }
+
+            if (type == 2) {
+                $('#' + Cfg.dlgId).dialog('setTitle', '修改部门');
+                //加载部门根节点
+                $('#parentDeptId').combotree({ url: '/sys/dept/getDepart?isUpdate=0&isHome=1&deptId=' + deptid + "&r=" + (new Date()).getTime() });
+
+                $.getJSON("/sys/dept/modifyDept?deptId=" + deptid + "&r=" + (new Date()).getTime(), function (data) {
+                    $('#parentDeptId').combotree('setValue', data.parentDeptId.toString());
+                    $('#formData').form('load', data);
+                    $("#deptName").blur();
+                    $('#deptCode').blur();
+                });
+            }
+
+            //打开窗口
+            $('#' + Cfg.dlgId).dialog('open');
+
+
+        }
+	</script>
+</head>
+<body>
+<div class="ContentDiv">
+	<table id="tabData"></table>
+</div>
+<div id="tb" style="height: auto">
+	<div style="margin-top: 5px; margin-bottom: 5px">
+		<a id="btnAdd" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a> | <a id="btnMod" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">修改</a> | <a id="btnDel" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'">删除</a>
+	</div>
+</div>
+<div id="dlgSave" class="easyui-dialog" style="padding: 5px; width: 600px; height: 340px;"
+	 data-options="modal: true,autoOpen: false,buttons: '#dlg-buttons',iconCls: 'icon-menu',collapsible: false,minimizable: false,
+                maximizable: false,resizable: false,closed: true">
+	<div class="easyui-layout" fit="true">
+		<div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+			<form id="formData" method="post">
+				<input type="hidden" id="deptId" name="deptId" />
+				<table width="100%" cellpadding="3" cellspacing="2" border="0">
+					<tr>
+						<td align="right" style="width:100px">
+							<div style="width: 80px;">上级部门：</div>
+						</td>
+						<td class="textContent">
+							<input id="parentDeptId" name="parentDeptId" class="easyui-combotree" missingMessage="上级部门为必填" data-options="required:true"style="width: 200px" />
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td align="right">
+							部门编码：
+						</td>
+						<td align="left">
+							<input id="deptCode" name="deptCode" class="easyui-textbox" missingMessage="部门编码为必填" data-options="required:true,validType:['length[1,50]']" style="width: 200px" />
+						</td>
+						<td align="left">
+							<div id="deptCodeTip" style="width: 200px">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							部门名称：
+						</td>
+						<td align="left">
+							<input id="deptName" name="deptName" class="easyui-textbox" missingMessage="角色名称为必填" data-options="required:true,validType:['chinese','length[1,30]']" style="width: 200px" />
+						</td>
+						<td align="left">
+							<div id="deptNameTip" style="width: 200px">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							部门简称：
+						</td>
+						<td align="left">
+							<input id="deptNameJC" name="deptNameJC" class="easyui-textbox" style="width: 200px" />
+						</td>
+						<td align="left">
+							<div id="deptNameJCTip" style="width: 200px">
+							</div>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="dlg-buttons">
+	<a id="btnSave" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-ok'">保存</a> <a id="btnClose" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-cancel'"
+																															   onclick="javascript:$('#dlgSave').dialog('close')">取消</a>
+</div>
+</body>
+</html>

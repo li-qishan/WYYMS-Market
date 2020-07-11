@@ -1,0 +1,152 @@
+
+#ScrollContent_9HJwfp {
+    left: 0em;
+}
+
+/* #Box_WdAW4r {
+	top: 3.13em;
+	margin-left: 43px;
+} */
+
+#CustomListView_KE5wR5 {
+    width: 100%;
+    top: 4.5em;
+    height: 100%;
+}
+
+#Header {
+    height: 2.63em;
+    border-top-width: 00px;
+    border-right-width: 00px;
+    border-bottom-width: 1px;
+    border-left-width: 00px;
+    border-style: solid;
+    border-color: rgba(241, 241, 241, 1);
+    color: rgb(255, 255, 255);
+    z-index: 10000;
+    /*position: relative;*/
+}
+
+body {
+    background-color: #eee;
+}
+
+.returnPng {
+    width: 1.5em;
+}
+
+#Icon {
+    min-height: 2em;
+    min-width: 3em;
+    display: -webkit-box !important;
+    display: box !important;
+    position: relative;
+    -webkit-box-align: center;
+    box-align: center;
+    -webkit-box-pack: center;
+    box-pack: center;
+}
+
+#More {
+    width: 0.8em;
+    font-size: 2em;
+    height: 100%;
+    color: #FFFFFF;
+    position: absolute;
+    right: 3%;
+    top: 10%;
+    transform: rotate(90deg);
+}
+
+.visibility {
+    visibility: visible;
+}
+
+.visibility-hidden {
+    visibility: hidden;
+}
+
+hr.style-one { /*内嵌水平线*/
+    width: 70%;
+    margin: 0 auto;
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.li {
+    /* font-size: 0.825em; */
+    padding: 20px;
+    margin: 0.8em;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 2px 2px 3px #aaaaaa;
+}
+
+/* 处理部门  */
+#Text_gDb04u {
+    /*  margin-left: -70px; */
+
+}
+
+/* 处理部门  处理人 */
+#Text_23epQu {
+    /*  margin-left: -70px; */
+
+}
+
+/* 处理部门 */
+#Box_blnk9E {
+    margin: 15px 20px 0px 0px;
+}
+
+/* 创建时间 */
+#Box_NTOuxJ {
+    margin: 10px 20px 0px 0px;
+}
+
+/* 创建时间 */
+#Text_YYPk8o {
+    /* margin-left: -120px; */
+
+}
+
+/* 完成时间 */
+#Box_FEEMWj {
+    margin: 10px 20px 0px 0px;
+}
+
+/* 设置行内盒子 标题 */
+#title {
+    display: inline-block;
+    width: auto;
+}
+
+/* #Box_WdAW4r {
+	margin: 0.8em;
+	margin-bottom: 0 !important;
+	border-radius: 10px;
+	position: fixed;
+	width: 90%;
+	background-color:#FFF;
+	z-index: 9999;
+	top: 2.63em;
+	height: auto !important;
+	box-shadow: 2px 2px 3px #aaaaaa;
+	padding: 10px 15px 0px 15px;
+} */
+
+#Box_WdAW4r {
+    /* margin: 0.8em; */
+    margin-bottom: 0 !important;
+    /*border-radius: 10px;*/
+    position: fixed;
+    width: 100%;
+    background-color: #ECE9E9;
+    z-index: 9999;
+    top: 2.63em;
+    height: auto !important;
+    /* box-shadow: 2px 2px 3px #aaaaaa; */
+    padding: 10px 15px 0px 15px;
+}

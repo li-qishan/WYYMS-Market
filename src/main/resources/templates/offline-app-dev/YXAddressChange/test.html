@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+<body>
+
+<select id="province">
+    <option value="-1" selected disabled>请选择省份</option>
+</select>
+<select id="city">
+    <option value="-1" selected disabled>请选择省份</option>
+</select>
+<select id="xian">
+    <option value="-1" selected disabled>请选择省份</option>
+</select>
+<select id="jie">
+    <option value="-1" selected disabled>请选择省份</option>
+</select>
+<script src="js/jquery-1.10.2.js"></script>
+<script>
+    // window.οnlοad = function () {
+    $(document).ready(function () {
+        var province = $('#province');
+        var city = $('#city');
+        var xian = $('#xian');
+        var jie = $('#jie');
+        //声明变量存放省份数据
+        var citiesData;
+        var arr = ['province', 'city', 'xian', 'jie'];
+        var provinceIndex;
+        var cityIndex;
+        var xianIndex;
+
+        $.getJSON('Cities.json', function (data) {
+            debugger
+            //获取数据
+            citiesData = data;
+            //加载省份数据
+            console.log(citiesData);
+            citiesData.forEach(function (value, index) {
+                //生产option子元素
+                var option = $("<option data-code='" + value.code + "' value='" + index + "'>" + value.name + "</option>");
+                // 添加金省份
+                province.append(option);
+
+            })
+
+        });
+        /*选中省份的方法*/
+        province.change(function () {
+            debugger
+            //获取value
+            provinceIndex = $(this).val();
+            var thisId = $(this).attr('id');
+            alert(thisId);
+            var newCityData = citiesData[provinceIndex].childs;
+            //清空子元素
+            clearSelect(thisId);
+            //添加地级市
+            addOption(newCityData, city);
+        });
+        //选中地级市方法
+        city.change(function () {
+            //获取value
+            cityIndex = $(this).val();
+            var thisId = $(this).attr('id');
+            var newCityData = citiesData[provinceIndex].childs[cityIndex].childs;
+            //清空子元素
+            clearSelect(thisId);
+            //遍历添加区县
+            addOption(newCityData, xian);
+        });
+        //选中区县方法
+        xian.change(function () {
+            //获取区县的index
+            xianIndex = $(this).val();
+            var thisId = $(this).attr('id');
+            var newCityData = citiesData[provinceIndex].childs[cityIndex].childs[xianIndex].childs;
+            //清空子元素
+            clearSelect(thisId);
+            //遍历添加街道
+            addOption(newCityData, jie);
+        });
+
+        /*清空select方法：当当前select被选中的时候要清空之后的几个select的内容**/
+        function clearSelect(thisID) {
+//             返回arr所用
+            var index = arr.indexOf(thisID);
+            //判断所有是否存在
+            if (index >= 0) {
+                //清除index之后的select
+                for (var i = index + 1; i < arr.length; i++) {
+                    $('#' + arr[i] + '').empty();
+                    $('#' + arr[i] + '').append("<option selected disabled>请选择</option>")
+                }
+            }
+        }
+
+        /*添加元素方法*/
+        function addOption(newCityData, next) {
+            newCityData.forEach(function (value, index) {
+                var option = $("<option data-code='" + value.code + "' value='" + index + "'>" + value.name + "</option>")
+                next.append(option)
+            })
+        }
+
+
+    });
+</script>
+</body>
+</html>

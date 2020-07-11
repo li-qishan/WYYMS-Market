@@ -1,0 +1,43 @@
+spring:
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        druid:
+          master:  #基本数据源
+              driverClassName: oracle.jdbc.OracleDriver
+              url: jdbc:oracle:thin:@192.168.0.232:1521:TTPLAN
+              username: EPM_LN
+              password: neusoft
+          second: # 本地数据源
+              driverClassName: oracle.jdbc.OracleDriver
+              url: jdbc:oracle:thin:@192.168.0.232:1521:TTPLAN
+              username: EPM_LN
+              password: neusoft
+          third: # 本地数据源
+              driverClassName: oracle.jdbc.OracleDriver
+              url: jdbc:oracle:thin:@192.168.0.232:1521:TTPLAN
+              username: EPM_LN
+              password: neusoft
+          #Druid手工配置
+          initial-size: 10
+          max-active: 99
+          min-idle: 10
+          max-wait: 60000
+          pool-prepared-statements: true
+          max-pool-prepared-statement-per-connection-size: 20
+          time-between-eviction-runs-millis: 60000
+          min-evictable-idle-time-millis: 300000
+          #validation-query: SELECT 1 FROM DUAL
+          test-while-idle: true
+          test-on-borrow: false
+          test-on-return: false
+          stat-view-servlet:
+              enabled: true
+              url-pattern: /druid/*
+          filter:
+              stat:
+                  log-slow-sql: true
+                  slow-sql-millis: 1000
+                  merge-sql: false
+              wall:
+                  config:
+                      multi-statement-allow: true

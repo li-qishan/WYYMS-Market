@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html
+        class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="/static/mobile/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/mobile/ui-box.css">
+    <link rel="stylesheet" href="/static/mobile/ui-base.css">
+    <link rel="stylesheet" href="/static/mobile/ui-color.css">
+    <link rel="stylesheet" href="/static/mobile/uap.icon.css">
+    <link rel="stylesheet" href="/static/mobile/uap.control.css">
+    <link rel="stylesheet" href="/app/YXArrears/css/userInfo.css">
+
+    <script src="/static/web/js/jquery-1.10.2.js"></script>
+    <script src="/static/web/js/vue.min.js"></script>
+</head>
+
+<body class="">
+<div class="uh ub ub-pc ub-ac ub-f1 bc-head" data-control="HEADER" id="Header">
+    <!--<div class="fa fa-1g ub-img1 " id="Icon">-->
+    <!--<img class="returnPng" src="/static/mobile/img/returnNoline.png">-->
+    <!--</div>-->
+    <div class="uinput ub  ub-f1" data-control="SEARCH" id="Search">
+        <div class=" gui-s-t">
+            <select id="searchSelect">
+                <option value=1>户号</option>
+                <option value=5>催费员</option>
+                <option value=6>抄表员</option>
+            </select>
+        </div>
+        <input id="searchInput" placeholder="请输入您的户号或催费员帐号" type="tel"
+               value="" class="ub-f1 ub ub-pc ub-ac gui-search"
+               data-control-scope="Search"> <span class="gui-i"></span> <input
+            type="month" id="searchMonth" class="dateSelect hide" value=""/>
+        <datalist>
+
+        </datalist>
+        <div class="uinn fa sc-text gui-s-c">
+            <img class="searchPng" src="/static/mobile/img/search.png">
+        </div>
+        <div id="searchBtn" class="btn ub ub-ac bc-text-head ub-pc gui-s-btn">搜索</div>
+    </div>
+</div>
+<div
+        style="width: 100%; height: auto; background-color: #ECEBEB; z-index: 9999;">
+    <div class="ub ub-f2 allShow" data-control="BOX">
+        <div data-control="TEXT" class="ub-f1 title" id="Text_c1nmRf">总欠费金额：</div>
+        <div data-control="TEXT" class="ub-f1 value" id="arrearsMoney"
+             style="display: inline-block;" data-bind="text:">0元
+        </div>
+        <div data-control="TEXT" class="ub-f1 title" id="Text_grbr3M">总欠费用户：</div>
+        <div data-control="TEXT" class="ub-f1 value_right" id="userNum"
+             data-bind="text:">0户
+        </div>
+    </div>
+    <div class="gui-bgx bgx_top"></div>
+    <div class="gui-list-top list-top"></div>
+    <div class="gui-wrapper topWrapper" style="margin-top: 1.5em;">
+        <div class="ub c-wh uinn-a1 bc-border">
+            <div class="gui-tariff-date fs9" data-control="TEXT">户号</div>
+            <div class="gui-tariff-date fs9" data-control="TEXT">户名</div>
+            <div class="gui-tariff-date t-blu fs9 ufm1 ut-s" data-control="TEXT">欠费金额</div>
+            <div class="gui-tariff-date t-blu fs9 ufm1 ut-s" data-control="TEXT">电费月份</div>
+        </div>
+    </div>
+</div>
+<div class="" data-control="CONTENT" id="ScrollContent_RQF9yx">
+    <ul style="position: absolute; top: 0.4em;">
+        <li v-for="item in dataList" class="ub-pc" @click="searchClick(item.CONSNO,item.YM)">
+            <div class="gui-wrapper liss">
+                <div class="ub c-wh uinn-a1 line">
+                    <div class="gui-tariff-date fs9" data-control="TEXT" id="cosnNo">{{item.CONSNO}}</div>
+                    <div class="gui-tariff-date fs9" data-control="TEXT" id="consName">{{item.CONSNAME}}</div>
+                    <div class="gui-tariff-date t-blu fs9 ufm1 ut-s" data-control="TEXT" id="arrearMoney">
+                        {{item.ARREARSMONEY}}
+                    </div>
+                    <div class="gui-tariff-date t-blu fs9 ufm1 ut-s" data-control="TEXT" id="YM">{{item.YM}}</div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="mask" id="mask">
+    <div class="delConfirm" id="LoginoutForm">
+        <p style="text-align: center; margin-bottom: 10%;">退出登录</p>
+        <p style="text-align: center;">确定要退出当前用户吗？</p>
+        <div class=" ub delBtnGroup">
+            <div id="LoginOutSubmit" class="btn tx-c">确定</div>
+            <div id="LoginOutCancel" class="btn tx-c">取消</div>
+        </div>
+    </div>
+</div>
+<script src="/app/YXArrears/js/userInfo.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html
+        class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<!--     <link rel="stylesheet" href="css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/ui-base.css">
+    <link rel="stylesheet" href="css/ui-color.css">
+    <link rel="stylesheet" href="css/uap.icon.css">
+    <link rel="stylesheet" href="css/uap.control.css">
+    <link rel="stylesheet" href="css/userSearch.css">
+
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/config.js"></script>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="">
+<div class="uh ub ub-pc ub-ac ub-f1 bc-head" id="Header_u8i7yY">
+    <!--<div class="fa fa-1g ub-img1 " id="Icon">-->
+        <!--<img class="returnPng" src="/static/mobile/img/returnNoline.png">-->
+    <!--</div>-->
+    <div class="uinput ub bc-border uba ub-f1" id="Search">
+
+        <div class="uba bc-border bc-text gui-s-t">
+            <select id="searchSelect">
+                <option value=1>户号</option>
+                <option value=3>表号</option>
+                <option value=7>用户名</option>
+                <option value=2>手机号</option>
+            </select>
+        </div>
+        <input id="searchInput" placeholder="请输入您的查询条件" type="tel" value="" class="ub-f1 ub ub-pc ub-ac gui-search">
+        <span class="gui-i"></span>
+        <div class="uinn fa sc-text gui-s-c" style="color: #adadad">
+            <img class="searchPng" src="css/img/search.png">
+        </div>
+        <div id="searchBtn" class="btn ub ub-ac bc-text-head ub-pc gui-s-btn">搜索</div>
+    </div>
+    <div class="" id="Box_0"></div>
+</div>
+<div class="" data-control="CONTENT" id="ScrollContent_yDAbi8">
+    <div class="scrollbox">
+        <div class="" id="CustomListView_k66J5c">
+            <ul>
+                <li v-for="item in dataList" class="li">
+                    <div class="ub" id="Box_SHsfwu">
+                        <div class="" id="Text_djlhiK">{{ item.CONSNAME }}</div>
+                        <div class="" id="Text_mAaWNb" style="color: #44af95;position: absolute;right: 10px;">{{ item.CONSNO }}
+                        </div>
+                    </div>
+                    <hr style="margin-bottom: 10px;margin-top: 10px;">
+                    <div class="ub" id="Box_WLnUH7">
+                        <div class="ub-f3" style="width: 60%;" id="Box_beRMW6">
+                            <div class="ub-f1 ub" id="Box_fx3URa">
+                                <div class="" id="Text_ceG6QW">电话：</div>
+                                <div class="" id="Text_As3olU">{{ item.MOBILE }}
+                                </div>
+                            </div>
+                            <div class="ub" id="Box_x9bfAV">
+                                <div class="" id="Text_z0jxm1">地址：</div>
+                                <div class="" style="width: 82%;" id="Text_yhPr2Y">{{ item.ELECADDR }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ub-f1 tx-c ub ub-ac ub-pc ub-ver" style="width: 30%;"
+                             id="Box_pM30bb">
+                            <div class="button ub ub-ac bc-text-head ub-pc bc-btn"
+                                 id="btn_operate" @click="searchClick(item.CONSNO)">查询
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="mask" id="mask">
+    <div class="delConfirm" id="LoginoutForm">
+        <p style="text-align: center; margin-bottom: 10%;">退出登录</p>
+        <p style="text-align: center;">确定要退出当前用户吗？</p>
+        <div class=" ub delBtnGroup">
+            <div id="LoginOutSubmit" class="btn tx-c">确定</div>
+            <div id="LoginOutCancel" class="btn tx-c">取消</div>
+        </div>
+    </div>
+</div>
+
+<script src="js/userSearch.js"></script>
+</body>
+
+</html>

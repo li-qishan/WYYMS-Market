@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        <level>TRACE</level>
+    </filter>
+    <!-- 测试部署时使用如下配置 -->
+    <!-- 可让每天产生一个日志文件，最多 30 个，更早的删除 -->
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>../log/log-%d{yyyy-MM-dd}.log
+        </fileNamePattern>
+        <maxHistory>1</maxHistory>
+    </rollingPolicy>
+    <encoder>
+        <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger -
+            %msg%n
+        </pattern>
+    </encoder>
+</appender>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <logger name="org.springframework.web" level="INFO"/>
+
+    <!-- 开发、测试环境 -->
+    <springProfile name="dev,test">
+        <logger name="org.springframework.web" level="INFO"/>
+        <logger name="com.buf.common.interceptor" level="DEBUG" />
+        <logger name="com.buf.main" level="INFO" />
+        <logger name="com.buf.sys" level="DEBUG" />
+        <logger name="com.buf.ind" level="INFO" />
+        <!--myibatis log configure-->
+        <logger name="com.apache.ibatis" level="TRACE"/>
+        <logger name="java.sql.Connection" level="DEBUG"/>
+        <logger name="java.sql.Statement" level="DEBUG"/>
+        <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+
+
+
+    </springProfile>
+
+    <!-- 生产环境 -->
+    <springProfile name="pro">
+        <logger name="org.springframework.web" level="ERROR"/>
+        <logger name="com.buf.ind" level="ERROR" />
+    </springProfile>
+
+    <root >
+        <appender-ref ref="RollingFile"/>
+    </root>
+</configuration>

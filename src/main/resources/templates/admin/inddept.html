@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/web/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="/web/js/layer.min.js"></script>
+    <script type="text/javascript" src="/web/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/utils/password.js"></script>
+    <link rel="stylesheet" type="text/css" href="/web/css/bootstrap.min.css">
+
+
+
+    <link rel="stylesheet" type="text/css" href="/jquery-easyui-1.5.2/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/jquery-easyui-1.5.2/themes/icon.css">
+    <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.mobile.js"></script>
+    <script type="text/javascript" src="/utils/extend-methods.js"></script>
+    <script type="text/javascript" src="/utils/validate.js"></script>
+
+    <script type="text/javascript" src="/admin/js/inddept.js"></script>
+    <link href="/web/css/head.css" rel="stylesheet" type="text/css"/>
+</head>
+<body class="easyui-layout">
+<div class="place" data-options="region:'north'"  style="maxHeight:10px;">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">指标维护</a></li>
+        <li><a href="#">指标供电单位编码维护</a></li>
+    </ul>
+</div>
+<div data-options="region:'center'"  style="maxHeight:200px;">
+    <table id="dg">
+    </table>
+    <div id="toolbar" style="padding: 10px;">
+        <div style="clear: both;margin-bottom: 0px;margin-top: 10px;">
+            <a id="unitAddBtn" class="easyui-linkbutton"
+               data-options="iconCls:'icon-add',plain:true,text:'新增'" onclick="openDialog('新增')"></a>
+            |
+            <a id="unitRemoveBtn" class="easyui-linkbutton"
+               data-options="iconCls:'icon-edit',plain:true,text:'修改'" onclick="openDialog('变更')"></a>
+            |
+            <a id="saveBtn" class="easyui-linkbutton"
+               data-options="iconCls:'icon-remove',plain:true,text:'删除'" onclick="remove()"></a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

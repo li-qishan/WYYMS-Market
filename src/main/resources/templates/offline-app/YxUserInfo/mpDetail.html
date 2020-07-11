@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html
+        class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<!--     <link rel="stylesheet" href="css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/ui-base.css">
+    <link rel="stylesheet" href="css/ui-color.css">
+    <link rel="stylesheet" href="css/uap.icon.css">
+    <link rel="stylesheet" href="css/uap.control.css">
+    <link rel="stylesheet" href="css/mpDetail.css">
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/vue.min.js"></script>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="" ontouchstart>
+<div class="uh bc-head  ubb bc-border" data-control="HEADER"
+     id="Header_kQwYSL">
+    <div class="ub">
+        <!-- <div class="" id="Icon"> -->
+            <!-- <img class="returnPng" src="css/img/returnNoline.png"> -->
+        <!-- </div> -->
+        <h1 class="ut ub-f1 ulev-3  tx-c" tabindex="0">计量点详细</h1>
+        <!-- <div class="nav-btn" id="nav-right"> -->
+            <!-- <div class="fa  fa-1g  ub-img1"></div> -->
+        <!-- </div> -->
+    </div>
+</div>
+<div class="" data-control="CONTENT" id="ScrollContent_Omp5LP">
+    <div class="scrollbox">
+        <div id="userInfo" class="swiper-slide">
+            <ul style="position: absolute; width: 100%;">
+                <li v-for="item in dataList" class="ub-pc li">
+                    <div class="gui-wrapper">
+                        <div class="colmn" style="padding-bottom: 2.2em">
+                            <div id="mpId" style="display: none;">{{item.mpId}}</div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border ">
+                                <div class="gui-user-tite fs9">计量点编号：</div>
+                                <div id="sp_no" class="gui-user-con t-blu fs9 ufm1 "
+                                     data-bind="text:mpNo">{{item.mpNo}}
+                                </div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border ">
+                                <div class="gui-user-tite fs9">计量点名称：</div>
+                                <div id="sp_NAME" class="gui-user-con t-blu fs9 ufm1 ">{{item.mpName}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">计量点地址：</div>
+                                <div id="DEPT_NAME" class="gui-user-con t-blu fs9 ufm1 ">{{item.mpAddr}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">计量点性质：</div>
+                                <div id="CB_REAL_NAME" class="gui-user-con t-blu fs9 ufm1 ">{{item.mpAttr}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">计量装置分类：</div>
+                                <div id="CF_REAL_NAME" class="gui-user-con t-blu fs9 ufm1 ">{{item.mdType}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">计量分类：</div>
+                                <div id="CONS_NO" class="gui-user-con t-blu fs9 ufm1 ">{{item.mpType}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">主用途类型：</div>
+                                <div id="CONS_NAME" class="gui-user-con t-blu fs9 ufm1 ">{{item.usageType}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">电量交换点分类：</div>
+                                <div id="ELEC_ADDR" class="gui-user-con t-blu fs9 ufm1 ">{{item.exchgSort}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">计量点容量：</div>
+                                <div id="MR_SECT_NO" class="gui-user-con t-blu fs9 ufm1 ">{{item.mpCap}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">电压等级：</div>
+                                <div id="STATUS_CODE" class="gui-user-con t-blu fs9 ufm1 ">{{item.voltCode}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">电价码：</div>
+                                <div id="BUILD_DATE" class="gui-user-con t-blu fs9 ufm1 ">{{item.prcCode}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">电价金额：</div>
+                                <div id="CUST_QUERY_NO" class="gui-user-con t-blu fs9 ufm1 ">{{item.kwhPrc}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">电价名称：</div>
+                                <div id="DQMOBILE" class="gui-user-con t-blu fs9 ufm1 ">{{item.catPrcName}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">计算方式：</div>
+                                <div id="TSDMOBILE" class="gui-user-con t-blu fs9 ufm1 ">{{item.pqCalc}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">定比定量值：</div>
+                                <div id="ZWMOBILE" class="gui-user-con t-blu fs9 ufm1 ">{{item.fqrValue}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">定比扣减标志：</div>
+                                <div id="TYPE" class="gui-user-con t-blu fs9 ufm1 ">{{item.frDeductFlag}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">扣减执行顺序：</div>
+                                <div id="DYDJ" class="gui-user-con t-blu fs9 ufm1 ">{{item.deductOrder}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">变损计费标志：</div>
+                                <div id="TRADE" class="gui-user-con t-blu fs9 ufm1 ">{{item.tlBillFlag}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">变损分摊标志：</div>
+                                <div id="JLFS" class="gui-user-con t-blu fs9 ufm1 ">{{item.tlShareFlag}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">计量方式：</div>
+                                <div id="THIS_READ" class="gui-user-con t-blu fs9 ufm1 ">{{item.measMode}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">变损分摊协议值：</div>
+                                <div id="tlShareValue" class="gui-user-con t-blu fs9 ufm1 ">{{item.tlShareValue}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">线损计费标志：</div>
+                                <div id="llBillFlag" class="gui-user-con t-blu fs9 ufm1 ">{{item.llBillFlag}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">线损计算方式：</div>
+                                <div id="llCalcMode" class="gui-user-con t-blu fs9 ufm1 ">{{item.llCalcMode}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">有功线损计算值：</div>
+                                <div id="apLlValue" class="gui-user-con t-blu fs9 ufm1 ">{{item.apLlValue}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">无功线损计算值：</div>
+                                <div id="rpLlValue" class="gui-user-con t-blu fs9 ufm1 ">{{item.rpLlValue}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">线损分摊标志：</div>
+                                <div id="llShareFlag" class="gui-user-con t-blu fs9 ufm1 ">{{item.llShareFlag}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">线损分摊协议值：</div>
+                                <div id="BAR_CODE" class="gui-user-con t-blu fs9 ufm1 ">{{item.llShareValue}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">是否装表：</div>
+                                <div id="T_FACTOR" class="gui-user-con t-blu fs9 ufm1 ">{{item.meterFlag}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">是否负控：</div>
+                                <div id="CONTRACT_CAP" class="gui-user-con t-blu fs9 ufm1 ">{{item.lcFlag}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">计量点状态：</div>
+                                <div id="RUN_CAP" class="gui-user-con t-blu fs9 ufm1 ">{{item.mpStatus}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">台区名称：</div>
+                                <div id="PREPAY_BAL" class="gui-user-con t-blu fs9 ufm1 ">{{item.tgName}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">线路名称：</div>
+                                <div id="lineName" class="gui-user-con t-blu fs9 ufm1 ">{{item.lineName}}</div>
+                            </div>
+                            <div class="ub c-wh uinn-a1 ubb bc-border">
+                                <div class="gui-user-tite fs9">接线方式：</div>
+                                <div id="wiringMode" class="gui-user-con t-blu fs9 ufm1 ">{{item.wiringMode}}</div>
+                            </div>
+                        </div>
+
+                        <template v-if="MeterFlagYes">
+                            <input class="btn-side" id="meterSubmit" type="button" @click="toMeterDetail()"
+                                   value="电能表详情">
+                        </template>
+
+                        <template v-if="MeterFlagNo">
+                            <input class="btn-side-no" id="meterSubmit" type="button"
+                                   value="电能表详情">
+                        </template>
+
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+<script src="js/mpDetail.js"></script>
+
+
+</body>
+</html>

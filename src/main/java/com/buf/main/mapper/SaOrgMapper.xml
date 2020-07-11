@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buf.main.dao.SaOrgMapper" >
+    <resultMap id="BaseResultMap" type="com.buf.main.entity.SaOrg" >
+        <id column="ORG_NO" property="orgNo" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="P_ORG_NO" property="pOrgNo" jdbcType="VARCHAR" />
+        <result column="ORG_TYPE" property="orgType" jdbcType="VARCHAR" />
+        <result column="IS_DELETE" property="isdelete" jdbcType="VARCHAR" />
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+        delete from SA_ORG
+        where ORG_NO = #{orgNo,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.buf.main.entity.SaOrg" >
+        insert into SA_ORG (ORG_NO, ORG_NAME, P_ORG_NO,
+        ORG_TYPE)
+        values (#{orgNo,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{pOrgNo,jdbcType=VARCHAR},
+        #{orgType,jdbcType=VARCHAR}, #{isdelete,jdbcType=VARCHAR}, #{professional,jdbcType=VARCHAR},
+        #{datasource,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.buf.main.entity.SaOrg" >
+        update SA_ORG
+        set ORG_NAME = #{orgName,jdbcType=VARCHAR},
+        P_ORG_NO = #{pOrgNo,jdbcType=VARCHAR},
+        ORG_TYPE = #{orgType,jdbcType=VARCHAR},
+        IS_DELETE = #{isdelete,jdbcType=VARCHAR}
+        where ORG_NO = #{orgNo,jdbcType=VARCHAR}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select ORG_NO, ORG_NAME, P_ORG_NO, ORG_TYPE, IS_DELETE
+        from SA_ORG
+        where ORG_NO = #{orgNo,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByPOrgNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select ORG_NO, ORG_NAME, P_ORG_NO, ORG_TYPE, IS_DELETE
+        from SA_ORG
+        where P_ORG_NO LIKE #{pOrgNo,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByOrgNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select ORG_NO, ORG_NAME, P_ORG_NO, ORG_TYPE, IS_DELETE
+        from SA_ORG
+        where ORG_NO LIKE #{pOrgNo,jdbcType=VARCHAR}
+    </select>
+    <select id="selectAll" resultType="hashmap">
+        select ORG_NO, ORG_NAME, P_ORG_NO, ORG_TYPE, IS_DELETE from SA_ORG where IS_DELETE = 0 order by ORG_NO asc
+    </select>
+</mapper>

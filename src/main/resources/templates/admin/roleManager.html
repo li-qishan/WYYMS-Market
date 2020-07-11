@@ -1,0 +1,587 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>角色管理</title>
+	<link href="/web/css/Style1.css" rel="stylesheet" type="text/css" />
+	<link id="easyuiTheme" rel="Stylesheet" type="text/css" href="/jquery-easyui-1.4.5/themes/default/easyui.css" />
+	<link rel="Stylesheet" type="text/css" href="/jquery-easyui-1.4.5/themes/icon.css" />
+	<script src="/web/js/jquery-1.10.2.js"></script>
+	<script language="javascript" type="text/javascript" src="/jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+	<script language="javascript" type="text/javascript" src="/jquery-easyui-1.4.5/jquery.easyui.extend.js"></script>
+	<script language="javascript" type="text/javascript" src="/plugin/jquery.cookie.js"></script>
+	<script language="javascript" type="text/javascript" src="/jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+	<script language="javascript" type="text/javascript" src="/plugin/formvalidator/formValidator-4.1.3.js"></script>
+	<script language="javascript" type="text/javascript" src="/plugin/formvalidator/formValidatorRegex.js"></script>
+	<script language="javascript" type="text/javascript" src="/plugin/keyboardoperation.js"></script>
+	<script type="text/javascript" language="javascript">
+        var Cfg = { 'tableId': 'tabData', 'validateTableID': 'tabValidateData', 'dlgId': 'dlgSave', 'dlgMenuID': 'dlgMenuSave' };
+        var editType = 'add';
+
+        $(window).resize(function () {
+            $('#' + Cfg.tableId).datagrid('resize');
+        });
+
+        $(function () {
+            //表格
+            InitGrid();
+            //按钮事件
+            InitBtnEvent();
+        });
+
+        //角色列表
+        function InitGrid() {
+            $('#' + Cfg.tableId).datagrid({
+                singleSelect: true,
+                title: '角色列表',
+                iconCls: 'icon-role',
+                nowrap: true,
+                autoRowHeight: false,
+                striped: true,
+                collapsible: false,
+                fit: true,
+                loadMsg: "数据加载中，请稍后...",
+                url: '/sys/role/list' + "?r=" + new Date().getTime(),
+                remoteSort: false,
+                idField: 'roleId',
+                //frozenColumns: [[
+                //    { field: 'ck', checkbox: true }
+                //]],
+                columns: [[
+                    { field: 'roleId', width: 0, hidden: true, title: '主键', align: 'center' },
+                    { field: 'roleName', width: $(this).width() * 0.3, title: '角色名称', align: 'center' },
+                    { field: 'roleKey', width: $(this).width() * 0.3, title: '角色标识', align: 'center' },
+                    { field: 'description', width: $(this).width() * 0.3, title: '角色描述', align: 'center' }
+                ]],
+                pagination: false,
+                rownumbers: true,
+                toolbar: "#tb"
+            });
+
+            var p = $('#' + Cfg.tableId).datagrid('getPager');
+            $(p).pagination({
+                pageSize: 10, //每页显示的记录条数，默认为10
+                pageList: [10, 20, 30], //可以设置每页记录条数的列表
+                beforePageText: '第', //页数文本框前显示的汉字
+                afterPageText: '页    共 {pages} 页',
+                displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+                onBeforeRefresh: function () {
+                }
+            });
+        }
+
+        //初始化按钮事件
+        function InitBtnEvent() {
+            //添加角色
+            $('#btnAdd').click(function () {
+                editType = 'add';
+                InitForm(null);
+            });
+            //修改角色
+            $('#btnMod').click(function () {
+                editType = 'mod';
+                var rows = $('#' + Cfg.tableId).datagrid('getSelections');
+                if (rows.length != 1) {
+                    $.messager.alert('提示信息', '请选择一条要修改的数据！', 'info');
+                    return false;
+                }
+                else {
+                    $.getJSON("/sys/role/modifyRole?roleId=" + rows[0].roleId.toString() + "&random=" + new Date().getTime(), function (data) {
+                        InitForm(data);
+                    });
+                }
+            });
+            //删除角色
+            $('#btnDel').click(function () {
+                var rows = $('#' + Cfg.tableId).datagrid('getSelections');
+                if (rows.length == 0) {
+                    $.messager.alert('提示信息', '请选择一条要删除的数据！', 'info');
+                    return false;
+                }
+                else {
+                    var Ids = rows[0].roleId.toString();
+
+                    $.messager.confirm('系统提示', '您确定要删除数据吗?', function (r) {
+                        if (r) {
+                            $.get("/sys/role/deleteRole?ids=" + Ids + "&random=" + new Date().getTime(),
+                                function (data) {
+                                    if (data == "9") {
+                                        $.messager.alert('提示信息', '程序出现异常：请联系管理员！', 'error');
+                                    }
+                                    else if (data == '8') {
+                                        $.messager.alert('提示信息', '角色已分配人员，不允许删除!', 'info');
+                                        return;
+                                    }
+                                    else if (data == '7') {
+                                        $.messager.alert('提示信息', '角色已分配菜单，不允许删除!', 'info');
+                                        return;
+                                    }
+                                    else {
+                                        $.messager.alert('提示信息', data, 'info',
+                                            function () {
+                                                $('#' + Cfg.tableId).datagrid('clearSelections');
+                                                $('#' + Cfg.tableId).datagrid('reload');
+                                            });
+                                    }
+                                });
+                        }
+                    });
+                }
+            });
+
+            //保存角色
+            $('#btnSave').click(function () {
+                var roleName = $('#roleName').val().trim();
+                var roleKey = $('#roleKey').val().trim();
+                var roleDescribe = $('#description').val().trim();
+                var row = $('#' + Cfg.tableId).datagrid('getSelected');
+                var roleId;
+                if (!row) {
+                    roleId = '0';
+                } else {
+                    roleId = row.roleId;
+                }
+
+                if (roleName == '') {
+                    $.messager.alert('提示信息', '角色名称不可为空', 'info');
+                    return;
+                }
+
+                if (roleKey == '') {
+                    $.messager.alert('提示信息', '角色标识不可为空', 'info');
+                    return;
+                }
+
+                $('#formData').form('submit', {
+                    url: '/sys/role/validateRoleKey?roleId=' + roleId + '&roleKey=' + roleKey + '&editType=' + editType + '&random=' + new Date().getTime(),
+                    onSubmit: function () {
+                        var isValidate_ = $(this).form("enableValidation").form("validate");
+                        return isValidate_;
+                    },
+                    success: function (data) {
+                        if (data == '9') {
+                            $.messager.alert('提示信息', '程序出现异常：请联系管理员！', 'error');
+                            return;
+                        } else if (data == '0') {
+                            $.messager.alert('提示信息', '角色标识已存在！', 'info');
+                            return;
+                        }
+
+                        $.ajax({
+                            url: '/sys/role/saveRole',
+                            type: 'POST',
+                            data: { 'action': 'saveRole', 'roleId': roleId, 'roleName': roleName, 'roleKey': roleKey, 'description': roleDescribe, 'editType': editType, 'random': new Date().getTime() },
+                            cache: false,
+                            success: function (data) {
+                                if (data == '9') {
+                                    $.messager.alert('提示信息', '程序出现异常：请联系管理员！', 'error');
+                                }
+                                else if (data == '2') {
+                                    $.messager.alert('提示信息', '角色标识已存在！', 'info');
+                                    return;
+                                }
+                                else {
+                                    $.messager.alert('提示信息', data, 'info', function () {
+                                        $('#' + Cfg.dlgId).dialog('close');
+                                        $('#' + Cfg.tableId).datagrid('reload');
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+
+            //分配菜单
+            $('#btnSet').click(function () {
+                var rows = $('#' + Cfg.tableId).datagrid('getSelections');
+                if (rows.length == 0) {
+                    $.messager.alert('提示信息', '请至少选择一条要分配菜单的角色！', 'info');
+                    return false;
+                }
+                else {
+                    ////清空Form
+                    $('#formMenuData').form("clear");
+                    $('#' + Cfg.dlgMenuID).dialog('setTitle', '分配菜单');
+                    //加载部门根节点
+                    $('#menuTree').tree({
+                        checkbox: true,
+                        url: '/sys/menu/getAllMenus?r=' + new Date().getTime(),
+                        onLoadSuccess: function () {
+                            $.ajax({
+                                type: "POST",
+                                url: '/sys/role/getMenuDataById?roleId=' + rows[0].roleId.toString() + "&r=" + new Date().getTime(),
+                                cache: false,
+                                async: false,
+                                dataType: "text",
+                                success: function (data) {
+                                    if (data != "") {
+                                        var array = data.split(',');
+                                        for (var i = 0; i < array.length; i++) {
+                                            var node = $('#menuTree').tree('find', array[i]);
+                                            //begin mod by tan.li 20170410 只保存没有子节点的
+                                            var childrenNodes = $('#menuTree').tree('getChildren', node.target);
+
+                                            if (childrenNodes == 0) {
+                                                $('#menuTree').tree('check', node.target);
+                                            }
+                                            //begin mod by tan.li 20170410 只保存没有子节点的
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                    $("#ROLEIDForMENU").val(rows[0].roleId.toString());
+                    $('#' + Cfg.dlgMenuID).dialog('open');
+                }
+            });
+
+            //保存分配菜单
+            $('#btnSaveMenu').click(function () {
+                $('#formMenuData').form('submit', {
+                    url: '/sys/role/saveRoleMenu?roleId=' + $("#ROLEIDForMENU").val() + '&menuIds=' + GetNode() + '&random=' + new Date().getTime(),
+                    onSubmit: function () {
+                        return true;
+                    },
+                    success: function (data) {
+                        if (data == "9") {
+                            $.messager.alert('提示信息', '保存分配菜单失败，请联系管理员检查！', 'error');
+                            $('#' + Cfg.dlgMenuID).dialog('close');
+                        }
+                        else {
+                            $.messager.alert('提示信息', data, 'info',
+                                function () {
+                                    $('#' + Cfg.dlgMenuID).dialog('close');
+                                });
+                        }
+                    }
+                });
+            });
+
+            //分配权限按钮
+            $('#btnValid').click(function () {
+                var rows = $('#' + Cfg.tableId).datagrid('getSelections');
+                if (rows.length == 0) {
+                    $.messager.alert('提示信息', '请至少选择一条要分配权限的角色！', 'info');
+                    return false;
+                }
+                else if (rows[0].roleName == "系统管理员") {
+                    $.messager.alert('提示信息', '［系统管理员］角色不需要分配权限！', 'info');
+                    return false;
+                }
+                else {
+                    ////清空Form
+                    $('#formValidData').form("clear");
+
+                    $('#dlgValidSave').dialog('setTitle', '分配权限');
+                    InitValidateGrid(10000, false);
+                    $('#menuValidateTree').tree({
+                        url: '/sys/role/getMenusByRoleId?roleId=' + rows[0].roleId.toString() + "&r=" + new Date().getTime(),
+                        onClick: function (node) {
+                            $(this).tree('toggle', node.target);
+                            // if ($(this).tree('getChildren', node.target).length == 0) {
+                            //alert("");
+                            treeId = node.id;
+                            InitValidateGrid(node.id, true);
+                            // }
+                        }
+                    });
+
+                    $('#dlgValidSave').dialog('open');
+                }
+            });
+
+            var treeId = 0;
+
+            //保存分配权限
+            $('#btnSaveValid').click(function () {
+                //获取选中行
+                var rows = $('#' + Cfg.validateTableID).datagrid('getSelections');
+                var Ids = "";
+                for (var i = 0; i < rows.length; i++) {
+                    if (rows[i].menuId + "" == treeId + "") {
+                        Ids += rows[i].validateId.toString() + ",";
+                    }
+                }
+                if (Ids != "") { Ids = Ids.substr(0, Ids.length - 1); }
+
+                ////获取所有行
+                //var allrows = $('#' + Cfg.validateTableID).datagrid("getRows");
+                //for (var i = 0; i < rows.length; i++) {
+                //    //获取每一行的数据alert(rows[i].id);
+                //    //假设有id这个字段
+                //}treeId
+
+                var rolerows = $('#' + Cfg.tableId).datagrid('getSelections');
+
+                $.post('/sys/role/saveRoleAndValidate?roleId=' + rolerows[0].roleId + '&validId=' + Ids + '&menuId=' + treeId + "&r=" + new Date().getTime(),
+                    function (data) {
+                        if (data == "9") {
+                            $.messager.alert('提示信息', '程序出现异常：请联系管理员！', 'error');
+                            $('#dlgValidSave').dialog('close');
+                        }
+                        else {
+                            $.messager.alert('提示信息', data, 'info');
+                        }
+                    });
+            });
+        }
+
+        //权限列表
+        function InitValidateGrid(menuid, mode) {
+            $('#' + Cfg.validateTableID).datagrid({
+                title: '权限列表',
+                iconCls: 'icon-function',
+                nowrap: true,
+                autoRowHeight: false,
+                striped: true,
+                collapsible: false,
+                singleSelect: false,
+                fit: true,
+                loadMsg: "数据加载中，请稍后...",
+                url: '/sys/val/validate?menuId=' + menuid + "&r=" + new Date().getTime(),
+                remoteSort: false,
+                idField: 'validateId',
+                frozenColumns: [[
+                    { field: 'ck', checkbox: true }
+                ]],
+                columns: [[
+                    { field: 'validateId', title: '', hidden: true, width: 0 },
+                    { field: 'menuId', title: '', hidden: true, width: 0 },
+                    { field: 'menuName', title: '菜单名称', width: 100 },
+                    {
+                        field: 'validateName', title: '权限名称', width: 100, editor: {
+                        type: 'validatebox',
+                        options: {
+                            required: true
+                        }
+                    }
+                    },
+                    { field: 'validateKey', title: '权限验证码', width: 100, editor: 'text' },
+                    { field: 'description', title: '说明', width: 150, editor: 'text' }
+                ]],
+                onLoadSuccess: function () {//当数据加载成功时触发
+                    $('#' + Cfg.validateTableID).datagrid('unselectAll');
+                    var rows = $('#' + Cfg.tableId).datagrid('getSelections');
+                    $.get('/sys/role/validateChecked?roleId=' + rows[0].roleId + "&r=" + new Date().getTime(),
+                        function (data) {
+                            var Ids = data.split(',');
+                            for (var i in Ids) {
+                                $('#' + Cfg.validateTableID).datagrid('selectRecord', Ids[i]);//根据id选中行
+                            }
+                        });
+                },
+                pagination: false,
+                rownumbers: true,
+                toolbar: '#tbValid'
+            });
+
+            //显示编辑按钮
+            if (mode) {
+                $('#tbValid').show();
+            }
+            else {
+                $('#tbValid').hide();
+            }
+        }
+
+        //得到选中的菜单
+        function GetNode(type) {
+            var node = $('#menuTree').tree('getChecked', ['checked', 'indeterminate']);
+            var ids = '';
+            for (var i = 0; i < node.length; i++) {
+                ids += node[i].id + ',';
+            }
+            ids = ids.substring(0, ids.length - 1);
+            return ids;
+
+            //var cnodes = '';
+            //var pnodes = '';
+
+            //var prevNode = ''; //保存上一步所选父节点
+            //for (var i = 0; i < node.length; i++) {
+
+            //    if ($('#MenuTree').tree('isLeaf', node[i].target)) {
+            //        cnodes += node[i].id + ',';
+
+            //        var pnode = $('#MenuTree').tree('getParent', node[i].target); //获取当前节点的父节点
+            //        if (prevNode != pnode.id) //保证当前父节点与上一次父节点不同
+            //        {
+            //            pnodes += pnode.id + ',';
+            //            prevNode = pnode.id; //保存当前节点
+            //        }
+            //    }
+            //}
+            //cnodes = cnodes.substring(0, cnodes.length - 1);
+            //pnodes = pnodes.substring(0, pnodes.length - 1);
+
+            //if (type == 'child') { return cnodes; }
+            //else { return pnodes };
+        };
+
+
+
+        function InitForm(data) {
+            ////清空Form
+            $('#formData').form("clear");
+            if (data == null) {
+                $('#' + Cfg.dlgId).dialog('setTitle', '添加角色');
+                $("#roleName").focus();
+            }
+            else {
+                $('#' + Cfg.dlgId).dialog('setTitle', '修改角色');
+                $('#formData').form('load', data);
+                $("#roleName").blur();
+            }
+
+            $('#' + Cfg.dlgId).dialog('open');
+
+
+        }
+
+
+
+	</script>
+
+</head>
+<body>
+<div class="ContentDiv">
+	<table id="tabData"></table>
+</div>
+<div id="tb" style="height: auto">
+	<div style="margin-top: 5px; margin-bottom: 5px">
+		<a id="btnAdd" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a> | <a id="btnMod" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">修改</a> | <a id="btnDel" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'">删除</a>| <a id="btnSet" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-set'">分配菜单</a>| <a id="btnValid" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-set'">分配权限</a>
+	</div>
+</div>
+
+<!-- 分配权限 -->
+<div id="dlgValidSave" class="easyui-dialog" style="padding: 5px; width: 750px; height: 490px;"
+	 data-options="modal: true,autoOpen: false,buttons: '#dlgValid-buttons',iconCls: 'icon-menu',collapsible: false,minimizable: false,
+                maximizable: false,resizable: false,closed: true">
+	<div class="easyui-layout" fit="true">
+		<div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+			<form id="formValidData" method="post">
+				<input type="hidden" id="Hidden1" name="ROLEIDForMENU" />
+				<div class="ContentDiv">
+					<table width="100%" cellpadding="3" cellspacing="2" border="0">
+						<tr>
+							<td valign="top" align="left" style="width: 160px; height: 300px">
+								<div style="width: 100%; height: 350px; overflow: auto">
+									<ul id="menuValidateTree" class="easyui-tree"></ul>
+								</div>
+							</td>
+							<td style="height: 360px" valign="top">
+								<table id="tabValidateData"></table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div id="tbValid" style="height: auto">
+		<div style="margin-top: 5px; margin-bottom: 5px;">
+			<a id="btnSaveValid" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-save'">保存</a>
+		</div>
+	</div>
+</div>
+<div id="dlgValid-buttons">
+	<a id="btnCloseValid" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-cancel'"
+	   onclick="javascript:$('#dlgValidSave').dialog('close')">取消</a>
+</div>
+
+<!-- 分配菜单 -->
+<div id="dlgMenuSave" class="easyui-dialog" style="padding: 5px; width: 400px; height: 500px;"
+	 data-options="modal: true,autoOpen: false,buttons: '#dlgMenu-buttons',iconCls: 'icon-menu',collapsible: false,minimizable: false,
+                maximizable: false,resizable: false,closed: true">
+	<div class="easyui-layout" fit="true">
+		<div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+			<form id="formMenuData" method="post">
+				<input type="hidden" id="ROLEIDForMENU" name="ROLEIDForMENU" />
+				<table width="100%" cellpadding="2" cellspacing="2" border="0">
+					<tr>
+						<td align="left" style="width: 100%">
+							<p>请选择菜单</p>
+							<hr />
+							<ul id="menuTree" class="easyui-tree" data-options="
+			onClick: function(node){
+				$(this).tree('toggle', node.target);
+			},
+			onContextMenu: function(e,node){
+				e.preventDefault();
+				$(this).tree('select',node.target);
+				$('#mm').menu('show',{
+					left: e.pageX,
+					top: e.pageY
+				});
+			}"></ul>
+						</td>
+
+					</tr>
+
+				</table>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="dlgMenu-buttons">
+	<a id="btnSaveMenu" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-ok'">保存</a> <a id="btnCloseMenu" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-cancel'"
+																																   onclick="javascript:$('#dlgMenuSave').dialog('close')">取消</a>
+</div>
+
+<!-- 增删改查 角色 -->
+<div id="dlgSave" class="easyui-dialog" style="padding: 5px; width: 480px; height: 230px;"
+	 data-options="modal: true,autoOpen: false,buttons: '#dlg-buttons',iconCls: 'icon-menu',collapsible: false,minimizable: false,
+                maximizable: false,resizable: false,closed: true">
+	<div class="easyui-layout" fit="true">
+		<div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+			<form id="formData" method="post">
+				<input type="hidden" id="roleId" name="roleId" />
+				<input type="hidden" id="OLDRoleName" name="OLDRoleName" />
+				<table width="100%" cellpadding="3" cellspacing="2" border="0">
+					<tr>
+						<td width="130px" align="right">
+							角色名称：
+						</td>
+						<td align="left" style="width: 130px">
+							<input id="roleName" name="roleName" class="easyui-textbox" missingMessage="角色名称为必填" data-options="required:true,validType:['length[1,50]']" style="width: 120px" />
+						</td>
+						<td align="left">
+							<div id="roleNameTip" style="width: 200px">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							角色标识：
+						</td>
+						<td align="left" style="width: 130px">
+							<input id="roleKey" name="roleKey" class="easyui-textbox" missingMessage="角色标识为必填" data-options="required:true,validType:['length[1,50]']" style="width: 120px;" />
+						</td>
+						<td align="left">
+							<div id="roleKeyTip" style="width: 200px;">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							角色描述：
+						</td>
+						<td align="left">
+							<input id="description" name="description" class="easyui-textbox" missingMessage="角色描述为必填" data-options="required:false,validType:['length[1,300]']" style="width: 120px" />
+						</td>
+						<td></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="dlg-buttons">
+	<a id="btnSave" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-ok'">保存</a> <a id="btnClose" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-cancel'"
+																															   onclick="javascript:$('#dlgSave').dialog('close')">取消</a>
+</div>
+</body>
+</html>

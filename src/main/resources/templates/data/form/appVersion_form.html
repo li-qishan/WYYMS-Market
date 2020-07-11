@@ -1,0 +1,49 @@
+<form id="formData" method="post" enctype="multipart/form-data">
+    <input type="hidden" id="versionControId" name="versionControId"/>
+    <input type="hidden" id="isDelete" name="isDelete" value="1"/>
+    <table width="100%" cellpadding="2" cellspacing="2">
+        <tr style="height: 35px">
+            <td align="right">
+                APK名：
+            </td>
+            <td align="left">
+                <input id="apkName" name="apkName" class="easyui-textbox" missingMessage="apk名为必填"
+                       data-options="required:true,validType:['length[1,50]']" style="width: 220px"/>
+            </td>
+        </tr>
+        <tr style="height: 35px">
+            <td align="right">
+                APKID：
+            </td>
+            <td align="left">
+                <input id="apkId" name="apkId" class="easyui-textbox" missingMessage="apkID为必填"
+                       data-options="required:true,validType:['length[1,50]']" style="width: 220px"/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                版本号：
+            </td>
+            <td style="padding-top: 10px" align="left">
+                <input id="versionCode" name="versionCode" class="easyui-textbox" missingMessage="版本号为必填"
+                       data-options="required:true,validType:['length[1,50]']" style="width: 220px"/>
+            </td>
+        </tr>
+        <tr style="height: 35px">
+            <td align="right">
+                选择上传文件：
+            </td>
+            <td align="left">
+                <input id="file" name="file" type="file"/>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<script>
+    $("#file").change(function (value) {
+        var fileName = $(this)[0].files[0].name;
+        fileName = fileName.substring(0, fileName.lastIndexOf("."));
+        $("#apkName").textbox("setValue", fileName)
+    });
+</script>

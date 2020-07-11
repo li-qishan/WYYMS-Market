@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html
+        class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="/static/mobile/ui-box.css">
+    <link rel="stylesheet" href="/static/mobile/ui-base.css">
+    <link rel="stylesheet" href="/static/mobile/ui-color.css">
+    <link rel="stylesheet" href="/static/mobile/uap.icon.css">
+    <link rel="stylesheet" href="/static/mobile/uap.control.css">
+    <link rel="stylesheet" href="/static/mobile/switch-buttons.css">
+    <script src="/static/web/js/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="css/login.css">
+
+</head>
+<body class="">
+<div class="bc-bg" tabindex="0" data-control="PAGE" id="Page">
+
+    <div class="bc-bg ub ub-ver ub-ac ub-con" data-control="FLEXBOXVER"
+         id="ContentFlexVer">
+        <div class="ub-fh">
+            <div class="uinn-4a ub ub-ac ub-pc-gui">
+                <span id="apkVersion"></span>
+                <div class="logo ub-img umhw1"></div>
+            </div>
+
+            <div class="ub ub-ver ub-f1">
+                <form method="get" action="#" class="gui-form">
+                    <div class="uba b-gra umar-a uc-a1 c-wh">
+                        <div class="ub ub-ac">
+                            <div class="gui-login-tit">用户名</div>
+                            <div class="ub-f1 uinput uinn uinn-gui">
+                                <input placeholder="请输入用户名" id="uid" value="1" type="text"
+                                       class="uc-a1 gui-search">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uba b-gra umar-a uc-a1 c-wh gui-t14">
+                        <div class="ub ub-ac">
+                            <div class="gui-login-tit">密码</div>
+                            <div class="ub-f1 uinput uinn uinn-gui">
+                                <input placeholder="请输入密码" id="upwd" value="1" type="password"
+                                       class="uc-a1 gui-search">
+                            </div>
+
+                            <img id="gui_img" onclick="hideShowPsw()" class="gui-login-p"
+                                 src="/static/mobile/img/icon-s.png">
+                        </div>
+                    </div>
+                    <div class="ub umar-a ub-ac">
+
+                        <label class="switch-btn no-radius ">
+                            <input class="checked-switch" type="checkbox" id="switchBox"/>
+                            <span class="text-switch" data-yes="是" data-no="否"></span>
+                            <span class="toggle-btn"></span>
+                        </label>
+
+                        <div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1"
+                             style="margin-left: 0.3em">记住密码
+                        </div>
+
+                    </div>
+                    <div class="uin uinn gui-login-btn">
+                        <div class="button ub ub-ac bc-text-head ub-pc bc-btn uc-a1"
+                             id="submit">登 录
+                        </div>
+                    </div>
+
+                    <button type="submit" class="uicon-h"></button>
+                </form>
+            </div>
+            <div class="uinn-4b"></div>
+        </div>
+    </div>
+</div>
+<div class="mask" id="mask">
+    <div class="delConfirm" id="delConfirm">
+        <p style="text-align: center; margin-bottom: 10%;">有新版本可升级</p>
+        <p style="text-align: center;">是否升级为最新版本？</p>
+        <div class=" ub delBtnGroup">
+            <div id="updateSubmit" class="btn tx-c">确定</div>
+            <div id="updateCancel" class="btn tx-c">取消</div>
+        </div>
+    </div>
+</div>
+<script src="js/login.js"></script>
+<script>
+    uap.switchBtn(".switch", function (obj, value) {
+    });
+</script>
+<script type="text/javascript">
+    // uid
+    var uid = document.querySelector('#uid');
+    var bodyHeight = document.body.offsetHeight;
+    uid.onclick = function (ev) {
+        document.querySelector('body').style.height = '99999px';
+        uid.style.position = 'static';
+        setTimeout(
+            function () {
+                document.body.scrollTop = document.documentElement.scrollTop = uid
+                        .getBoundingClientRect().top
+                    + pageYOffset - 60;
+            }, 50);
+        window.addEventListener('touchmove', fn, false);
+    }
+
+    uid.onblur = function () {
+        document.querySelector('body').style.height = "auto"
+        document.querySelector('body').removeAttribute('style')
+        window.removeEventListener('touchmove', fn, false)
+    }
+    // password
+    var password = document.querySelector('#upwd');
+    password.onclick = function (ev) {
+        document.querySelector('body').style.height = '99999px';
+        password.style.position = 'static';
+        setTimeout(
+            function () {
+                document.body.scrollTop = document.documentElement.scrollTop = password
+                        .getBoundingClientRect().top
+                    + pageYOffset - 60;
+            }, 50);
+        window.addEventListener('touchmove', fn, false);
+    }
+
+    password.onblur = function () {
+        document.querySelector('body').style.height = "auto"
+        document.querySelector('body').removeAttribute('style')
+        window.removeEventListener('touchmove', fn, false)
+    }
+    //触摸取消blur
+    function fn(ev) {
+        var _target = ev.target || ev.srcElement;
+        if (_target.nodeName != 'INPUT') {
+            uid.blur();
+            password.blur();
+        }
+        ev.preventDefault()
+    };
+</script>
+</body>
+</html>

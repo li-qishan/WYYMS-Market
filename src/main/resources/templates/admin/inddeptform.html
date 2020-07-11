@@ -1,0 +1,45 @@
+<form  class="easyui-form"  id="formData" method="post" data-options="novalidate:true">
+    <div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+
+            <table width="100%" style="border-collapse:separate; border-spacing:0px 15px;">
+                <tr>
+                    <td align="right" style="font-size: 13px">
+                        所属部门：
+                    </td>
+                    <td align="left">
+                        <input id="parent_NO" name="parent_NO" class="easyui-combotree"
+                               data-options="url:'/aDeptController/getrow',required:true,validType:'maxLength[20]',panelMaxHeight:200,panelHeight:'auto',method:'post',valueField:'dept_NO',textField:'dept_NAME'" style="width:250px;height:33px;" />
+                        <i style='margin-left:70px'>请选择所属部门</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" style="font-size: 13px">
+                        部门编码：
+                    </td>
+                    <td align="left">
+                        <input id="dept_NO" name="dept_NO" class="easyui-numberbox" data-options="required:true,validType:'maxLength[20]'" style="width:250px;height:33px;" />
+                        <i style='margin-left:70px'>请输入数字</i>
+                    </td>
+                 </tr>
+                <tr>
+                    <td align="right" style="font-size: 13px">
+                        部门全称：
+                    </td>
+                    <td align="left">
+                        <input id="dept_NAME" name="dept_NAME" class="easyui-textbox" data-options="required:true,validType:'maxLength[50]'" style="width:250px;height:33px;" />
+                        <i style='margin-left:70px'>请输入部门全称</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" style="font-size: 13px">
+                        部门简称：
+                    </td>
+                    <td align="left">
+                        <input id="short_NAME" name="short_NAME" class="easyui-textbox" data-options="required:true,validType:'maxLength[50]'" style="width:250px;height:33px;" />
+                        <i style='margin-left:70px'>请输入部门简称</i>
+                    </td>
+                </tr>
+            </table>
+
+    </div>
+</form>

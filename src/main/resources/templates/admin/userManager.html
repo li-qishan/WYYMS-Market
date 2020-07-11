@@ -1,0 +1,416 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>用户管理</title>
+	<link href="/web/css/Style1.css" rel="stylesheet" type="text/css" />
+	<link id="easyuiTheme" rel="Stylesheet" type="text/css" href="/jquery-easyui-1.4.5/themes/default/easyui.css" />
+	<link rel="Stylesheet" type="text/css" href="/jquery-easyui-1.4.5/themes/icon.css" />
+	<script src="/web/js/jquery-1.10.2.js"></script>
+	<script language="javascript" type="text/javascript" src="/jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+	<script language="javascript" type="text/javascript" src="/jquery-easyui-1.4.5/jquery.easyui.extend.js"></script>
+	<script language="javascript" type="text/javascript" src="/plugin/jquery.cookie.js"></script>
+	<script language="javascript" type="text/javascript" src="/jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+	<script language="javascript" type="text/javascript" src="/plugin/formvalidator/formValidator-4.1.3.js"></script>
+	<script language="javascript" type="text/javascript" src="/plugin/formvalidator/formValidatorRegex.js"></script>
+	<script language="javascript" type="text/javascript" src="/plugin/keyboardoperation.js"></script>
+
+	<script type="text/javascript" language="javascript">
+        var Cfg = { 'tableId': 'tabData', 'dlgId': 'dlgSave' };
+
+        $(window).resize(function () {
+            $('#' + Cfg.tableId).datagrid('resize');
+        });
+
+        $(function () {
+            //加载部门
+            $('#deptId').combotree({ url: '/sys/dept/getAllDepart?r=' + (new Date()).getTime() });
+            //加载角色
+            $('#roleId').combobox({ url: '/sys/role/getAllRole?r=' + (new Date()).getTime() });
+            //表格
+            InitGrid();
+            //按钮事件
+            InitBtnEvent();
+
+        });
+
+        function InitGrid() {
+            var w = 0;
+            var l = 100;
+            $('#' + Cfg.tableId).datagrid({
+                title: '用户列表',
+                iconCls: 'icon-user',
+                nowrap: false,
+                autoRowHeight: false,
+                striped: true,
+                collapsible: false,
+                singleSelect: true,
+                fit: true,
+                loadMsg: "数据加载中，请稍后...",
+                url: '/sys/user/list?r=' + (new Date()).getTime(),
+                remoteSort: false,
+                idField: 'userId',
+                columns: [[
+                    { field: 'userId', width: 0, hidden: true, title: '主键', align: 'center' },
+                    { field: 'deptId', width: 0, hidden: true, title: 'deptId', align: 'center' },
+                    { field: 'roleIds', width: 0, hidden: true, title: 'roleIds', align: 'center' },
+                    { field: 'userCode', width: $(this).width() * w + l, title: '人员编码', align: 'left' },
+                    { field: 'loginName', width: $(this).width() * w + l, title: '登录名', align: 'left' },
+                    { field: 'deptName', width: $(this).width() * w + l * 1.5, title: '所属部门', align: 'left' },
+                    { field: 'roleNames', width: $(this).width() * w * 1.5 + 2 * l, title: '角 色', align: 'left' },
+                    { field: 'realName', width: $(this).width() * w + l, title: '真实姓名', align: 'left' },
+                    { field: 'telephone', width: $(this).width() * w + l, title: '联系电话', align: 'left' },
+                    {
+                        field: 'ipStr', width: $(this).width() * w + l, title: 'IP地址', align: 'left', formatter: function (value, rec) {
+                        return value == null ? null : value.replace(/\|/g, "<br/>");
+                    }
+                    },
+                    {
+                        field: 'gender', width: $(this).width() * w + l / 2, title: '性 别', align: 'center',
+                        formatter: function (value, rec) {
+                            return value == "0" ? "男" : "女";
+                        }
+                    },
+                    {
+                        field: 'state', width: $(this).width() * w + l / 2 + 10, title: '状态', align: 'center',
+                        formatter: function (value, rec) {
+                            return value == "0" ? "<span class='icon-bullet_green' style='padding-left:20px;font-weight:bold;color:blue'>启用</span>" : "<span class='icon-bullet_red' style='padding-left:20px;font-weight:bold;color:blue' >停用</span>";
+                        }
+                    },
+                    {
+                        field: 'reset', width: $(this).width() * w + l / 2 + 10, title: '操作', align: 'center',
+                        formatter: function (value, rec) {
+                            return "<div class='icon-reload' onclick='ResetPass(" + JSON.stringify(rec) + ")' style='padding-left:20px;height:16px;font-weight:bold;color:blue' title='重置'>重置</div>";
+                        }
+                    }
+                ]],
+                pagination: false,
+                rownumbers: true,
+                toolbar: "#tb"
+            });
+
+            var p = $('#' + Cfg.tableId).datagrid('getPager');
+            $(p).pagination({
+                pageSize: 10, //每页显示的记录条数，默认为10
+                pageList: [10, 20, 30], //可以设置每页记录条数的列表
+                beforePageText: '第', //页数文本框前显示的汉字
+                afterPageText: '页    共 {pages} 页',
+                displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+                onBeforeRefresh: function (pageNumber, pageSize) {
+
+                }
+            });
+        }
+
+        ////重置密码
+        function ResetPass(row) {
+            //var row = JSON.parse(row);
+            $.ajax(
+                {
+                    url: '/sys/user/resetPass?r=' + (new Date()).getTime(),
+                    type: 'POST',
+                    cache: false,
+                    data: {
+                        userId: row.UserId
+                    },
+                    success: function (data) {
+                        if (data != "0") {
+                            ShowMsg("密码重置成功,默认密码为123!");
+                        }
+                        else {
+                            ShowMsg("密码重置失败!");
+                        }
+                    }
+                });
+        }
+
+        function InitBtnEvent() {
+            //添加
+            $('#btnAdd').click(function () {
+                InitForm(1, 0);
+            });
+            //修改
+            $('#btnMod').click(function () {
+                var rows = $('#' + Cfg.tableId).datagrid('getSelections');
+                if (rows.length != 1) {
+                    $.messager.alert('提示信息', '请选择一条要修改的数据！', 'info');
+                    return false;
+                }
+                else {
+                    InitForm(2, rows);
+                }
+            });
+            //删除
+            $('#btnDel').click(function () {
+                var rows = $('#' + Cfg.tableId).datagrid('getSelections');
+                if (rows.length == 0) {
+                    $.messager.alert('提示信息', '请选择一条要删除的数据！', 'info');
+                    return false;
+                }
+                for (var i = 0; i < rows[0].roleList.length; i++) {
+                    if (rows[0].roleList[i].roleKey == "systemadmin") {
+                        $.messager.alert('提示信息', '系统管理员不能删除！', 'info');
+                        return false;
+                    }
+                }
+
+                $.messager.confirm('系统提示', '您确定删除用户' + rows[0].loginName + '吗?', function (r) {
+                    if (r) {
+                        $.get("/sys/user/deleteUser?ids=" + rows[0].userId + "&r=" + (new Date()).getTime(),
+                            function (data) {
+                                if (data == "9") {
+                                    $.messager.alert('提示信息', '程序出现异常：请联系管理员！', 'error');
+                                }
+                                else {
+                                    $.messager.alert('提示信息', data, 'info',
+                                        function () {
+                                            $('#' + Cfg.tableId).datagrid('clearSelections');
+                                            $('#' + Cfg.tableId).datagrid('reload');
+                                        });
+                                }
+                            });
+                    }
+                });
+            });
+            //保存
+            $('#btnSave').click(function () {
+                $('#formData').form('submit', {
+                    url: '/sys/user/saveUser?r=' + (new Date()).getTime(),
+                    onSubmit: function () {
+                        var isValidate_ = $(this).form("enableValidation").form("validate");
+                        return isValidate_;
+                    },
+                    success: function (data) {
+                        if (data == "9") {
+                            $.messager.alert('提示信息', '程序出现异常：请联系管理员！', 'error');
+                        }
+                        else {
+                            $.messager.alert('提示信息', data, 'info',
+                                function () {
+                                    $('#' + Cfg.dlgId).dialog('close');
+                                    $('#' + Cfg.tableId).datagrid('reload');
+                                });
+                        }
+                    }
+                });
+            });
+        }
+
+        function InitForm(type, rows) {
+
+            $('#formData').form("clear");
+
+            //加载部门
+            $('#deptId').combotree({
+                onChange: function () {
+                    $("#hidDeptId").val($(this).combotree('getValue'));
+                    $("#hidDeptId").focus();
+                }
+            });
+            //加载角色
+            $('#roleId').combobox({
+                editable: false,
+                multiple: true,
+                panelHeight: '170',
+                valueField: 'roleId',
+                textField: 'roleName',
+                onChange: function () {
+                    $('#hidRoleId').val($(this).combobox('getValues'));
+                    $('#hidRoleId').focus();
+                }
+            });
+
+
+            if (type == 1) {
+                $('#' + Cfg.dlgId).dialog('setTitle', '添加用户');
+                $('#loginName').attr("readonly", false);
+                $("input[name=gender]:eq(0)").prop("checked", 'true');
+                $("input[name=state]:eq(0)").prop("checked", 'true');
+            }
+
+            if (type == 2) {
+                $('#' + Cfg.dlgId).dialog('setTitle', '修改用户');
+                //$('#loginName').attr("readonly", true);
+                $('#loginName').textbox('readonly',true);
+                $('#deptId').combotree('setValue', rows[0].deptId);
+                $('#hidDeptId').val(rows[0].deptId);
+                $('#roleId').combobox('setValues', rows[0].roleIds.split(","));
+                $('#hidRoleId').val(rows[0].roleIds);
+                $('#userId').val(rows[0].userId);
+
+                $('#loginName').textbox('setValue',rows[0].loginName);
+                $('#OLDNAME').val(rows[0].loginName);
+                $('#userCode').val(rows[0].userCode);
+                $('#realName').val(rows[0].realName);
+                $('#telephone').val(rows[0].telephone);
+                $('#ipStr').val(rows[0].ipStr);
+                //$('#EXTENSION').val(rows[0].Extension);
+                if (rows[0].gender == 0) {
+                    $("input[name=gender]:eq(0)").prop("checked", 'true');
+                }
+                else {
+                    $("input[name=gender]:eq(1)").prop("checked", 'true');
+                }
+                if (rows[0].state == 0) {
+                    $("input[name=state]:eq(0)").prop("checked", 'true');
+
+                } else {
+                    $("input[name=state]:eq(1)").prop("checked", 'true');
+                }
+            }
+            //打开窗口
+            $('#' + Cfg.dlgId).dialog('open');
+            //验证
+            //Initformvalidator(type);
+        }
+
+
+	</script>
+</head>
+<body>
+<input id="EditTypehid" type="hidden" />
+<div class="ContentDiv">
+	<table id="tabData"></table>
+</div>
+<div id="tb" style="height: auto">
+	<div style="margin-top: 5px; margin-bottom: 5px">
+		<a id="btnAdd" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a> |
+		<a id="btnMod" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">修改</a>|
+		<a id="btnDel" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'">删除</a>
+	</div>
+</div>
+<div id="dlgSave" class="easyui-dialog" style="padding: 5px; width: 620px; height: 370px;"
+	 data-options="modal: true,autoOpen: false,buttons: '#dlg-buttons',iconCls: 'icon-menu',collapsible: false,minimizable: false,
+                maximizable: false,resizable: false,closed: true">
+	<div class="easyui-layout" fit="true">
+		<div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+			<form id="formData" method="post">
+				<input type="hidden" id="userId" name="userId" />
+				<input type="hidden" id="OLDNAME" name="OLDNAME" />
+				<table width="100%" cellpadding="3" cellspacing="2">
+					<tr>
+						<td align="right">
+							登录名称：
+						</td>
+						<td align="left">
+							<input id="loginName" name="loginName" class="easyui-textbox" missingMessage="登录名称为必填" data-options="required:true,validType:['length[1,50]']" style="width: 120px"/>
+						</td>
+						<td>
+							<div id="loginNameTip" >
+								<i style='margin-left:50px'>名称不能超过10个字符</i>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							人员编码：
+						</td>
+						<td align="left">
+							<input id="userCode" name="userCode" missingMessage="登录名称为必填" data-options="required:true,validType:['length[1,50]']" />
+						</td>
+						<td>
+							<div id="userCodeTip" style="width: 200px">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							真实姓名：
+						</td>
+						<td align="left">
+							<input id="realName" name="realName" missingMessage="真实姓名为必填" data-options="required:true,validType:['length[1,50]']" />
+						</td>
+						<td>
+							<div id="realNameTip" style="width: 200px">
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td align="right">
+							所属部门：
+						</td>
+						<td align="left">
+							<input id="deptId" name="deptId" class="easyui-combotree" missingMessage="所属部门为必填" data-options="required:true" style="width: 200px;" />
+							<input type="hidden" id="hidDeptId" name="hidDeptId" />
+						</td>
+						<td>
+							<div id="hidDeptIdTip" style="width: 200px">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							角色：
+						</td>
+						<td align="left">
+							<input id="roleId" name="roleId" class="easyui-combobox" missingMessage="角色为必填" data-options="required:true" style="width: 200px;" />
+							<input type="hidden" id="hidRoleId" name="hidRoleId" />
+						</td>
+						<td>
+							<div id="hidRoleIdTip" style="width: 200px">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							联系电话：
+						</td>
+						<td align="left">
+							<input id="telephone" name="telephone" type="text" />
+						</td>
+						<td>
+							<div id="telephoneTip" style="width: 200px">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							IP：
+						</td>
+						<td align="left">
+							<input id="ipStr" name="IpStr" type="text" />
+						</td>
+						<td>
+							<div id="ipStrTip" style="width: 200px">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							性别：
+						</td>
+						<td align="left">
+							<input type="radio" name="gender" value="0" checked="checked" />男&nbsp;&nbsp;
+							<input type="radio" name="gender" value="1" />女
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td align="right">
+							用户状态：
+						</td>
+						<td align="left">
+							<input type="radio" name="state" value="0" checked="checked" />启用
+							<input type="radio" name="state" value="1" />停用
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td colspan="3" align="left">
+							<font color="red">注:新增用户默认密码123</font>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="dlg-buttons">
+	<a id="btnSave" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-ok'">保存</a> <a id="btnClose" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-cancel'"
+																															   onclick="javascript:$('#dlgSave').dialog('close')">取消</a>
+</div>
+</body>
+</html>
+
+

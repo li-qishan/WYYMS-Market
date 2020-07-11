@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html
+        class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/ui-base.css">
+    <link rel="stylesheet" href="css/ui-color.css">
+    <link rel="stylesheet" href="css/uap.icon.css">
+    <link rel="stylesheet" href="css/uap.control.css">
+    <link rel="stylesheet" href="css/userDetail.css">
+
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/vue.min.js"></script>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body class="">
+<div class="uh bc-head  ubb bc-border" data-control="HEADER"
+     id="Header_yt3wQr">
+    <div class="ub">
+
+        <!-- <div class=" " id="Icon"> -->
+            <!-- <img class="returnPng" src="css/img/returnNoline.png"> -->
+        <!-- </div> -->
+        <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">欠费用户详情</h1>
+        <!-- <div class="nav-btn" id="nav-right"> -->
+            <!-- <div class="fa  fa-1g  ub-img1"></div> -->
+        <!-- </div> -->
+    </div>
+</div>
+<div class="" data-control="CONTENT" id="ScrollContent_yUbgeu">
+    <div class="scrollbox">
+        <ul data-bind="collection:$collection" style="position: absolute; width: 100%;">
+            <li v-for="item in dataList" class="ub-pc li">
+                <div class="colmn" id="dataColmn">
+                    <div class="ub c-wh uinn-a1 ubb bc-border ">
+                        <div class="gui-user-tite fs9">用户编号：</div>
+                        <div id="ORG_NAME" data-control="TEXT" class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.CONSNO}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">用户名称：</div>
+                        <div id="CONSNAME" data-control="TEXT" class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.CONSNAME}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">欠费金额：</div>
+                        <div id="AMTMONEY" data-control="TEXT" class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.AMTMONEY}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">电费月份：</div>
+                        <div id="RCVBLYM" data-control="TEXT" class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.RCVBLYM}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">总电量：</div>
+                        <div id="PQ" data-control="TEXT" class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.PQ}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">应收金额：</div>
+                        <div id="RCVBLAMT" data-control="TEXT" class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.RCVBLAMT}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">应收违约金：</div>
+                        <div id="RCVBLPENALTY" data-control="TEXT" class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.RCVBLPENALTY}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">电气联系人：</div>
+                        <div id="DQMOBILE" class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.DQMOBILE}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">停送电联系人：</div>
+                        <div id="TSDMOBILE" class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.TSDMOBILE}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">账务联系人：</div>
+                        <div id="ZWMOBILE" class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.ZWMOBILE}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">结清标志：</div>
+                        <div id="SETTLEFLAG" data-control="TEXT"
+                             class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.SETTLEFLAG}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">费用状态：</div>
+                        <div id="STATUSCODE" data-control="TEXT"
+                             class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.STATUSCODE}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">用电类别：</div>
+                        <div id="ELECTYPECODE" data-control="TEXT"
+                             class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.ELECTYPECODE}}
+                        </div>
+                    </div>
+                    <div class="ub c-wh uinn-a1 ubb bc-border">
+                        <div class="gui-user-tite fs9">缴费方式：</div>
+                        <div id="PAYMODE" data-control="TEXT"
+                             class="gui-user-con t-blu fs9 ufm1 ut-s">
+                            {{item.PAYMODE}}
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<script src="js/userDetail.js"></script>
+</body>
+
+</html>

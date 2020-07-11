@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/ui-base.css">
+    <link rel="stylesheet" href="css/ui-color.css">
+    <link rel="stylesheet" href="css/uap.icon.css">
+    <link rel="stylesheet" href="css/uap.control.css">
+    <link rel="stylesheet" href="css/UpdateMobile.css">
+
+
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/swiper.min.js"></script>
+    <script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="" ontouchstart>
+<div class="uh bc-head  ubb bc-border" data-control="HEADER"
+     id="Header_q83L3z">
+    <div class="ub">
+        <div class="nav-btn" id="nav-right" style="display:none">
+            <div class="fa  fa-1g  ub-img1" id=""></div>
+        </div>
+        <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">联系人修改</h1>
+        <div class="nav-btn" id="nav-right">
+            <div class="fa  fa-1g  ub-img1" id="commitSave">保存</div>
+        </div>
+    </div>
+</div>
+<div class="" data-control="CONTENT" id="ScrollContent_rsQoGg">
+    <div class="scrollbox" style="padding: 15px;">
+        <div class="ub line box" data-control="BOX" id="Box_txL7nN">
+            <div data-control="TEXT" style="display: none;" class="consNo"
+                 id="consHid"></div>
+            <div class="ub-f1 title" data-control="BOX" id="Box_BssB7f">用户名</div>
+            <div class="ub-f3 value" data-control="BOX" id="userConsName">
+            </div>
+        </div>
+        <div class="ub line box" data-control="BOX" id="Box_rsr7cj">
+            <div class="ub-f1 title" data-control="BOX" id="Box_rrqLVz">原电话号</div>
+            <div class="ub-f3 value" data-control="BOX" id="oldPhone"></div>
+        </div>
+        <div class="ub line box" data-control="BOX" id="Box_rsrsd">
+            <div class="ub-f1 title" data-control="BOX" id="Box_rrqLVz">新电话号</div>
+            <div class="ub-f3 value" data-control="BOX" id="Box_4b4E4V">
+                <input id="newMobile" type="tel" class="DqMobile">
+            </div>
+        </div>
+        <div data-control="TEXT" class="msg" id="Text_CbCRuB">
+            <span style="color: red; margin: 5px;">*</span>请在文本框中输入修改后的电话号并点击保存
+        </div>
+    </div>
+</div>
+
+<div class="mask" id="mask">
+    <div class="delConfirm" id="updateConfirm">
+        <p style="text-align: center; margin-bottom: 10%;">提示</p>
+        <p style="text-align: center;">操作成功，是否同时修改账务和停送电联系人？</p>
+        <div class=" ub delBtnGroup">
+            <div id="updateSubmit" class="btn tx-c">是</div>
+            <div id="updateCancel" class="btn tx-c">否</div>
+        </div>
+    </div>
+</div>
+<script src="js/updateMobile.js"></script>
+<script src="js/config.js"></script>
+</body>
+
+</html>

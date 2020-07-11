@@ -1,0 +1,291 @@
+﻿
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head >
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>微应用管理平台</title>
+  <script type="text/javascript" src="/jquery-easyui-1.5.2/json2.js"></script>
+  <script src="/web/js/jquery-1.10.2.js"></script>
+
+  <script type="text/javascript" src="/web/js/layer.min.js"></script>
+
+
+
+  <link rel="stylesheet" type="text/css" href="/jquery-easyui-1.4.5/themes/default/easyui.css" />
+  <link rel="stylesheet" type="text/css" href="/jquery-easyui-1.4.5/themes/icon.css"/>
+  <script type="text/javascript" src="/jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+  <link href="/web/css/Style1.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="/web/js/Common.js"></script>
+  <script type="text/javascript" src="/utils/extend-methods.js"></script>
+  <script type="text/javascript" src="/utils/validate.js"></script>
+  <script type="text/javascript" src="/app/js/menu.js"></script>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .container {
+      height: 756px;
+      width: 100%;
+      background: #00CC33;
+    }
+    /*以下头部*/
+    .title {
+      height: 80px;
+      width: 100%;
+      background: #359F9B;
+    }
+
+    .title1 {
+      height: 80px;
+      width: 50%;
+      float: left;
+    }
+
+    .title3 {
+      height: 80px;
+      width: 45%;
+      float: left;
+      text-align: right;
+    }
+
+    .title3_1 {
+      height: 45px;
+      margin-top: 0px;
+      color: #fff;
+      font-family: "黑体";
+      margin-left: 10%;
+      font-size: 14px;
+      line-height: 24px;
+    }
+    /*以下为中间图片*/
+    .img {
+      height: 640px;
+      width: 1440px;
+    }
+
+    .botm {
+      height: 36px;
+      width: 100%;
+      background: #007471;
+    }
+
+    .botm1 {
+      height: 36px;
+      width: 30%;
+      float: left;
+    }
+
+    .botm2 {
+      height: 36px;
+      width: 40%;
+      float: left;
+      text-align: center;
+    }
+
+    .tabs-tool {
+    }
+    .tabs {
+      border-color: #50ADA3;
+    }
+  </style>
+  <script type="text/javascript">
+
+
+      function ShowLoading() {
+          $.ShowLoading();
+      }
+
+      function HideLoading() {
+          $.HideLoading();
+      }
+
+      var Initformvalidator = function () {
+          $.formValidator.initConfig({
+              theme: "126", submitOnce: true, formID: "formPass",
+              submitAfterAjaxPrompt: '有数据正在异步验证，请稍等...',
+              onError: function () {
+                  $("#btnPassOk").onFocus();
+              }
+          });
+          $("#newPass").formValidator({ onShowFixText: "请输入密码", onShow: "请输入密码", onFocus: "长度范围3-16", onCorrect: "密码合法" })
+              .inputValidator({ min: 3, max: 16, empty: { leftEmpty: false, rightEmpty: false, emptyError: "密码两边不能有空符号" }, onError: "密码长度[3-16]错误,请确认" });
+          // .passwordValidator({ compareID: "us" });
+
+          $("#rnewPass").formValidator({ onShowFixText: "请再次输入密码", onShow: "输再次输入密码", onFocus: "长度范围3-16", onCorrect: "密码一致" })
+              .inputValidator({ min: 3, max: 16, empty: { leftEmpty: false, rightEmpty: false, emptyError: "重复密码两边不能有空符号" }, onError: "密码长度[3-16]错误,请确认" })
+              .compareValidator({ desID: "newPass", operateor: "=", onError: "2次密码不一致,请确认" });
+      };
+      $(function () {
+          //$("#anchor1").jcContact({
+          //    defaultFun: function (wraper) {
+          //        $(wraper).find("a:last").css("background", "none");
+          //    },
+          //    float: 'right',
+          //    position: 'top',
+          //    posOffsetY: 150,
+          //    scrollSpeed: 1000
+
+          //});
+
+          $("#Indexiframe").attr("src", "/admin/sysindex");
+          $("#btnLogout").click(function () {
+              window.location = "/admin/logout";
+          });
+          //修改密码
+          $("#btnUpdatePassWord").click(function() {
+              $('#formPass').form("clear");
+              Initformvalidator();
+              $('#divPass').dialog('open');
+          });
+
+          //保存
+          $('#btnPassOk').click(function () {
+              $('#formPass').form('submit', {
+                  url: '/SysManage/ChangePass',
+                  onSubmit: function () {
+                      return $.formValidator.pageIsValid();
+                  },
+                  success: function (data) {
+                      if (data == "9") {
+                          $.messager.alert('提示信息', '程序出现异常：请联系管理员！', 'error');
+                      }
+                      else {
+                          $.messager.alert('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + data, 'info');
+                          $('#divPass').dialog('close');
+                      }
+                  }
+              });
+          });
+
+          $("#btnPassCancel").click(function () {
+              $("#divPass").dialog("close");
+          });
+
+
+
+          $("#btnLogout").mouseenter(function () {
+              $("#btnLogout").css("color", "red");
+          });
+          $("#btnLogout").mouseleave(function () {
+              $("#btnLogout").css("color", "white");
+          });
+
+          $("#btnUpdatePassWord").mouseenter(function () {
+              $("#btnUpdatePassWord").css("color", "red");
+          });
+          $("#btnUpdatePassWord").mouseleave(function () {
+              $("#btnUpdatePassWord").css("color", "white");
+          });
+
+          //if (roleStr.indexOf("leaderRole") >= 0) {
+          //addTab("工程首页", " /ReportManage/ManageIndex", "icon-home");
+          //}
+
+          //else if(roleStr.indexOf("operatorRole")>=0)
+          //{
+          //addTab("工程档案", " /ProjectArchives/ProjectArchives", "icon-home");
+          //}
+
+          //else if (roleStr.indexOf("projectDuty") >= 0) {
+          //    addTab("工程首页", " /ProjectManage/ProjectIndex?user=2", "icon-home");
+          //}
+      });
+
+  </script>
+</head>
+<body class="easyui-layout">
+
+<div data-options="region:'north'" style="height: 70px; overflow: hidden;">
+  <div class="title" style="background:url(/images/systemindex/all_title_bg.png) repeat-x">
+    <div class="title1" style="font-size:0">
+      <img src="/images/systemindex/all_title.png" />
+    </div>
+
+    <div class="title3">
+      <div class="title3_1" style="float: right;padding-top: 1px">
+        <table cellpadding="0" cellspacing="0" border="1px" style="height:42px">
+          <tr>
+            <td valign="top" style="text-align: left; height: 42px;">
+            <td/>
+            <td style="text-align: left">欢迎您!<span><br />[(${userName})] &nbsp;&nbsp;&nbsp;</span>
+              <br/>当前在线用户数量:<input type="text" id="recoed" value="" readonly="readonly" style="background-color: #167b79; color: #fff; border: none; width: 25px;" />
+            </td>
+            <td valign="top" style="text-align: right; vertical-align: middle">
+              <a href="javascript:void(0)" id="btnLogout" style="text-decoration: none; color: white;">
+                <span><img src="/Images/systemindex/on_off.png" /></span><span>退出登录</span>
+              </a>&nbsp;&nbsp;&nbsp;&nbsp;<br />
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-options="region:'center',iconCls:'icon-ok'">
+  <iframe scrolling="auto" id="Indexiframe" src="" style="width:100%;height:99.2%;"></iframe>
+</div>
+
+
+<div id="anchor1" class="jcContact">
+  <div class="jcConraper">
+    <div id="Div2" class="easyui-accordion" data-options="fit:true,border:false,animate:false">
+    </div>
+  </div>
+  <div class="jcConBtn"></div>
+</div>
+<div id="tab-tools" style="border: none">
+  <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-reload'" onclick="refreshTab()"></a>
+</div>
+
+<!--修改密码窗口-->
+<div id="divPass" class="easyui-window" style="width: 380px; height: 250px; padding: 5px;"
+     data-options="closed:true,modal: true,collapsible:false,minimizable:false,maximizable:false,resizable: false,title:'修改密码',iconCls:'icon-pass'">
+  <div class="easyui-layout" fit="true">
+    <div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+      <form id="formPass" method="post">
+        <table cellpadding="3">
+          <tr>
+            <td nowrap>
+              新密码：
+            </td>
+            <td>
+              <input id="newPass" name="newPass" type="password" />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="width: 280px; height: 30px">
+              <div id="newPassTip" style="width: 280px">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td nowrap>
+              确认密码：
+            </td>
+            <td>
+              <input id="rnewPass" name="rnewPass" type="password" />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="width: 280px; height: 30px">
+              <div id="rnewPassTip" style="width: 280px">
+              </div>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div region="south" border="false" style="text-align: right; height: 30px;padding-top:3px;">
+      <a id="btnPassOk" class="easyui-linkbutton" icon="icon-ok" href="javascript:void(0)">确定</a> <a id="btnPassCancel" class="easyui-linkbutton" icon="icon-cancel" href="javascript:void(0)">取消</a>
+    </div>
+  </div>
+</div>
+<!--修改密码窗口-->
+</body>
+</html>
+

@@ -1,0 +1,56 @@
+spring:
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        druid:
+#          master:  #东软数据源
+#              driverClassName: oracle.jdbc.driver.OracleDriver
+#              url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.160.86.13)(PORT=11521)))(CONNECT_DATA=(SERVICE_NAME=epmpln)))
+#              username: epm_ln
+#              password: ABcd_12345
+          master:  #营销数据源
+              driverClassName: oracle.jdbc.driver.OracleDriver
+              url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.160.8.22)(PORT=11521)))(CONNECT_DATA=(SERVICE_NAME=epmpln)))
+              username: reader_fx
+              password: neusoft
+          second: # 本地数据源
+              driverClassName: oracle.jdbc.driver.OracleDriver
+              url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.160.84.231)(PORT=11521)))(CONNECT_DATA=(SERVICE_NAME=yxwyymh)))
+              username: hh_app_test
+              password: HHsoft_88612086
+          third:  #营销数据源
+              driverClassName: oracle.jdbc.driver.OracleDriver
+              url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.160.8.22)(PORT=11521)))(CONNECT_DATA=(SERVICE_NAME=epmpln)))
+              username: reader_fx
+              password: neusoft
+          #Druid手工配置
+          initial-size: 10
+          max-active: 99
+          min-idle: 10
+          max-wait: 60000
+          pool-prepared-statements: true
+          max-pool-prepared-statement-per-connection-size: 20
+          time-between-eviction-runs-millis: 60000
+          min-evictable-idle-time-millis: 300000
+          #validation-query: SELECT 1 FROM DUAL
+          test-while-idle: true
+          test-on-borrow: false
+          test-on-return: false
+          stat-view-servlet:
+              enabled: true
+              url-pattern: /druid/*
+              #login-username: admin
+              #login-password: admin
+          filter:
+              stat:
+                  log-slow-sql: true
+                  slow-sql-millis: 1000
+                  merge-sql: false
+              wall:
+                  config:
+                      multi-statement-allow: true
+
+#dataservice 数据服务，数据源配置
+dataservice:
+    url: http://192.168.29.248:8080/dataservices
+    clientid: 0ad347174dd9ad1b85b5987665d2f184
+    clientsecret: 8dce2162d8ee30ddb913730aa3b8ce3d

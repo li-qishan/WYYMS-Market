@@ -1,0 +1,123 @@
+﻿
+html, body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-size: 12px;
+    color: black;
+    font-family: 宋体;
+}
+
+A:link {
+    color: #000;
+    text-decoration: none;
+}
+
+A:visited {
+    color: #000;
+    text-decoration: none;
+}
+
+A:active {
+    color: #000;
+    text-decoration: none;
+}
+
+A:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+/*
+.headerNav { background:url(/Images/header_bg.png) repeat-x;}
+#header .logo { background:url(/Image/logo.png) no-repeat;}
+#header li{ float:left; margin-left:-1px; list-style-type: none;
+padding:0 8px; line-height:11px; margin-right:2px; }
+#header .nav {float:right; margin-top:0px}
+#header .nav li { float:left; margin-left:-1px; list-style-type: none;
+padding:0 8px; line-height:11px; background:url(/Images/listLine.png) no-repeat;}
+#header .nav li a { color:#b9ccda; }
+#header .clock {float:right; color:#b9ccda; margin-bottom:0px; margin-right:0px; margin:0;padding:0}
+#header .clock li { float:left; margin-left:-1px; list-style-type: none;
+padding:0 8px; line-height:11px; }
+#header .themeList li div { background:url(/Images/themeButton.png) no-repeat;}
+*/
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input,
+textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+fieldset, img {
+    border: 0;
+}
+
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+caption, th {
+    text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+q:before, q:after {
+    content: '';
+}
+
+abbr, acronym {
+    border: 0;
+}
+
+.ContentDiv {
+    margin: 0 auto;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 3px;
+    height: 98%;
+    overflow: auto;
+    text-align: left;
+}
+
+.textTitle {
+    width: 100px;
+    text-align: right;
+}
+
+.textContent {
+    width: 300px;
+    text-align: left;
+}
+
+.hhDisaable {
+    background-color: #dddddd;
+}
+
+/* 左侧菜单 */
+.easyui-accordion ul{list-style-type:none;margin:0px; padding:10px;}
+.easyui-accordion ul li{ padding:3px; vertical-align:top}
+.easyui-accordion ul li a{  font-size:13px; color:Black;}
+.easyui-accordion ul li div{ height:22px;margin:2px 0px;padding-left:5px;padding-top:2px;}
+
+.easyui-accordion ul li div.hover{border:1px dashed #99BBE8; background:#E0ECFF;cursor:pointer;}
+.easyui-accordion ul li div.hover a{color:#416AA3;}
+.easyui-accordion ul li div.selected{border:1px solid #99BBE8; background:#E0ECFF;cursor:default;}
+.easyui-accordion ul li div.selected a{color:#416AA3; font-weight:bold;}

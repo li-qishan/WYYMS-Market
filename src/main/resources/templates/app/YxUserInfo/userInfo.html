@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html
+        class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="/static/mobile/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/mobile/ui-box.css">
+    <link rel="stylesheet" href="/static/mobile/ui-base.css">
+    <link rel="stylesheet" href="/static/mobile/ui-color.css">
+    <link rel="stylesheet" href="/static/mobile/uap.icon.css">
+    <link rel="stylesheet" href="/static/mobile/uap.control.css">
+    <link rel="stylesheet" href="/app/YxUserInfo/css/userInfo.css">
+    <link rel="stylesheet" href="/static/mobile/swiper.min.css">
+
+    <script src="/static/web/js/jquery-1.10.2.js"></script>
+    <script src="/static/web/js/vue.min.js"></script>
+    <script src="/app/YxUserInfo/js/swiper.min.js"></script>
+</head>
+<body class="" ontouchstart>
+<div class="bc-bg" tabindex="0"id="Page">
+    <div class="uh bc-head  ubb bc-border" data-control="HEADER" id="Header——sds">
+        <div class="ub">
+            <div class=" " id="Icon">
+                <img class="returnPng" src="/static/mobile/img/returnNoline.png">
+            </div>
+            <h1 class="ut ub-f1 ulev-3 ut-s tx-c" style="color: #FFFFFF;"
+                tabindex="0">用户详细</h1>
+            <div class="nav-btn" id="nav-right"></div>
+        </div>
+    </div>
+    <div class="" id="ScrollContent">
+        <div class="scrollbox">
+
+        </div>
+        <div class="ub ub-pc ub-ac gui-body">
+            <!--选修卡头部-->
+            <div class="tabs gui-width">
+                <a href="#" class="active">用户基本信息</a> <a href="#">电费电量</a> <a
+                    href="#">缴费信息</a>
+            </div>
+            <!--选项卡主体-->
+            <div id="tabs-container">
+                <div class="swiper-wrapper">
+
+                    <!--用户基本信息数据区-->
+                    <div id="userInfo" class="swiper-slide">
+                        <div class="gui-bgx"></div>
+                        <div class="gui-list-top"></div>
+                        <div class="gui-wrapper">
+                            <div class="tx-c msg disNone">查询失败，该用户不在辖区内！</div>
+                            <div class="colmn">
+                                <div class="ub c-wh uinn-a1 ubb bc-border ">
+                                    <div class="gui-user-tite fs9">供电单位名称：</div>
+                                    <div id="ORG_NAME" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">班组：</div>
+                                    <div id="DEPT_NAME" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">抄表员：</div>
+                                    <div id="CB_REAL_NAME"
+                                         class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">催费员：</div>
+                                    <div id="CF_REAL_NAME"
+                                         class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">用户编号：</div>
+                                    <div id="CONS_NO" class="gui-user-con t-blu fs9 ufm1 ut-s">8119296765</div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">用户名称：</div>
+                                    <div id="CONS_NAME" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">用电地址：</div>
+                                    <div id="ELEC_ADDR" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">抄表段号：</div>
+                                    <div id="MR_SECT_NO" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">用户状态：</div>
+                                    <div id="STATUS_CODE" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">立户日期：</div>
+                                    <div id="BUILD_DATE" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">自定义编码：</div>
+                                    <div id="CUST_QUERY_NO"
+                                         class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">电气联系人：</div>
+                                    <div id="DQMOBILE" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">停送电联系人：</div>
+                                    <div id="TSDMOBILE" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">账务联系人：</div>
+                                    <div id="ZWMOBILE" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">用户类别：</div>
+                                    <div id="TYPE" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">电压等级：</div>
+                                    <div id="DYDJ" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">行业分类：</div>
+                                    <div id="TRADE" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">计量方式：</div>
+                                    <div id="JLFS" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                    <div class="btn-side" id="spSearch">
+                                        <span>受电点查询</span>
+                                    </div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">营销发行表数：</div>
+                                    <div id="THIS_READ" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">表号：</div>
+                                    <div id="BAR_CODE" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">倍率：</div>
+                                    <div id="T_FACTOR" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">合同容量：</div>
+                                    <div id="CONTRACT_CAP"
+                                         class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">运行容量：</div>
+                                    <div id="RUN_CAP" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">余额：</div>
+                                    <div id="PREPAY_BAL" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                                <div class="ub c-wh uinn-a1 ubb bc-border">
+                                    <div class="gui-user-tite fs9">台区名称：</div>
+                                    <div id="TGNAME" class="gui-user-con t-blu fs9 ufm1 ut-s"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--电费用量数据区-->
+                    <div id="electric" class="swiper-slide">
+                        <!-- 							<div class="gui-bgx"></div> -->
+                        <!-- 							<div class="gui-list-top"></div> -->
+                        <!-- 							<div class="gui-wrapper"> -->
+                        <!-- 								<div class="ub c-wh uinn-a1 ubb bc-border"> -->
+                        <!-- 									<div class="gui-tariff-date fs9"> -->
+                        <!-- 										<p>2017年7月</p> -->
+                        <!-- 										<span> 07.01-07.31</span> -->
+                        <!-- 									</div> -->
+                        <!-- 									<div class="gui-tariff-d t-blu fs9 ufm1 ut-s">16Kw.h</div> -->
+                        <!-- 									<div class="gui-tariff-d t-blu fs9 ufm1 ut-s">8元</div> -->
+                        <!-- 								</div> -->
+                        <!-- 							</div> -->
+                    </div>
+                    <!--缴费信息数据区-->
+                    <div id="payment" class="swiper-slide">
+                        <!-- 							<div class="gui-bgx"></div> -->
+                        <!-- 							<div class="gui-list-top"></div> -->
+                        <!-- 							<div class="gui-wrapper"> -->
+                        <!-- 								<div class="ub c-wh uinn-a1 ubb bc-border"> -->
+                        <!-- 									<div class="gui-tariff-date fs9"> -->
+                        <!-- 										<p>2017年8月</p> -->
+                        <!-- 										<span> 08.01-08.31</span> -->
+                        <!-- 									</div> -->
+                        <!-- 									<div class="gui-tariff-d t-blu fs9 ufm1 ut-s">金融机构代收</div> -->
+                        <!-- 									<div class="gui-tariff-d t-blu fs9 ufm1 ut-s">10元</div> -->
+                        <!-- 								</div> -->
+                        <!-- 							</div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mask" id="mask">
+    <div class="delConfirm" id="LoginoutForm">
+        <p style="text-align: center; margin-bottom: 10%;">退出登录</p>
+        <p style="text-align: center;">确定要退出当前用户吗？</p>
+        <div class=" ub delBtnGroup">
+            <div id="LoginOutSubmit" class="btn tx-c">确定</div>
+            <div id="LoginOutCancel" class="btn tx-c">取消</div>
+        </div>
+    </div>
+</div>
+<script src="/app/YxUserInfo/js/userInfo.js"></script>
+<script src="/app/YxUserInfo/js/userData.js"></script>
+<script src="/app/YxUserInfo/js/electricData.js"></script>
+<script src="/app/YxUserInfo/js/paymentData.js"></script>
+
+
+</body>
+</html>

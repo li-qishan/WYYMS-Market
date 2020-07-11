@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>参数维护</title>
+    <script src="/web/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="/web/js/layer.min.js"></script>
+    <script type="text/javascript" src="/web/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/utils/password.js"></script>
+    <link rel="stylesheet" type="text/css" href="/web/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" type="text/css" href="/jquery-easyui-1.5.2/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/jquery-easyui-1.5.2/themes/icon.css">
+    <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.mobile.js"></script>
+    <script type="text/javascript" src="/utils/extend-methods.js"></script>
+    <script type="text/javascript" src="/utils/validate.js"></script>
+
+    <script type="text/javascript" src="/admin/js/parametermaintenance.js"></script>
+    <link href="/web/css/head.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body class="easyui-layout">
+<div class="place" data-options="region:'north'"  style="maxHeight:10px;">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">指标维护</a></li>
+        <li><a href="#">指标参数维护</a></li>
+    </ul>
+</div>
+<div data-options="region:'center'" >
+    <div class="easyui-layout" style="border: 0;" data-options="fit:true">
+        <div class="easyui-layout" data-options="fit:true">
+            <div data-options="region:'west',collapsible:false" style="width: 40%">
+                <table id="dgl"></table>
+                <div id="toolbar" style="padding: 10px;">
+                    <div style="clear: both;margin-bottom: 0px;margin-top: 5px;">
+                        <a id="laddContractBtn" class="easyui-linkbutton"
+                           data-options="iconCls:'icon-add',plain:true,text:'新增'" onclick="openDialog('dgl')"></a>
+                        |
+                        <a id="lremoveContractBtn" class="easyui-linkbutton"
+                           data-options="iconCls:'icon-remove',plain:true,text:'删除'" onclick="remove('dgl')"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div data-options="region:'center'">
+                <table id="dgr"></table>
+                <div id="rtoolbar" style="padding: 10px;">
+                    <div style="clear: both;margin-bottom: 0px;margin-top: 5px;">
+                        <a id="raddContractBtn" class="easyui-linkbutton"
+                           data-options="iconCls:'icon-add',plain:true,text:'新增'" onclick="openDialog('dgr')"></a>
+                        |
+                        <a id="rremoveContractBtn" class="easyui-linkbutton"
+                           data-options="iconCls:'icon-remove',plain:true,text:'删除'" onclick="remove('dgr')"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

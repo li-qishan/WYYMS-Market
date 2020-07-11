@@ -1,0 +1,101 @@
+#Header_WB23Jk {
+	color: white;
+	font-family: Microsoft Yahei;
+}
+
+#ScrollContent_P3uGu9 {
+	width: 100%;
+	height: 100%;
+	top: 2.63em;
+	font-family: Microsoft Yahei;
+	padding-bottom: 100px;
+}
+
+#Box_txL7nN {
+	margin-top: 1.25em;
+	margin-bottom: 1.25em;
+}
+
+#Icon {
+	padding-top: 0.16em;
+	padding-left: 0.3em;
+	width: 1em;
+	font-size: 2em;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+
+.title {
+	text-align: left;
+	font-size: 0.825em;
+	    color: #000;
+}
+
+.value {
+	text-align: right;
+	font-size: 0.825em;
+	    color: #807D7D;
+}
+.msg {
+	font-size: 0.625em;
+}
+
+.line {
+	border-bottom: solid 1px #C0C0C0;
+	background-color: #FFF;
+	height: 10%;
+	padding: 1.25em;
+/* 	font-size:30px;  */
+}
+
+.mobile {
+	font-size: 1em;
+	width: 100%;
+	height: 120px;
+	position: fixed;
+	bottom: 0px;
+	z-index: 9999;
+	/* 	border-radius: 50px; */
+	/* 	border: solid 1px #000; */
+	text-align: center;
+	background-color: #FFF;
+	z-index: 999;
+}
+
+.mobileText {
+	color: #000;
+	font-size: 30px;
+	height: 100%;
+	padding-top: 0.5em;
+}
+
+.active {
+	color: #fff;
+	text-decoration: none;
+	color: #44af95;
+}
+
+.selIcon {
+	display: block;
+	position: relative;
+	left: 40%;
+	width: 50px;
+	left: 40%;
+}
+.DqMobile{
+	outline: none;
+	border: none;
+	height: 100%;
+	width: 100%;
+	font-size:1.25em; 
+}
+
+
+.borderRadiusLeft {
+	border-radius: 50px 0px 0px 50px;
+}
+
+.borderRadiusRight {
+	border-radius: 0px 50px 50px 0px;
+}

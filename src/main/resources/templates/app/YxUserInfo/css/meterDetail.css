@@ -1,0 +1,277 @@
+#Header_MQH4G7 {
+	border-top-width: 00px;
+	border-right-width: 00px;
+	border-bottom-width: 1px;
+	border-left-width: 00px;
+	border-style: solid;
+	border-color: rgba(241, 241, 241, 1);
+	color: rgba(255, 255, 255, 1);
+	z-index: 10000;
+}
+
+.searchPng {
+	width: 1.525em;
+}
+.returnPng{
+	width: 1.5em;
+}
+#Icon {
+	min-height: 2em;
+	min-width: 3em;
+	display: -webkit-box !important;
+	display: box !important;
+	position: relative;
+	-webkit-box-align: center;
+	box-align: center;
+	-webkit-box-pack: center;
+	box-pack: center;
+}
+
+#ScrollContent_n2w5sg {
+	width: 100%;
+	left: 0.00em;
+	top: 3.13em;
+	font-size: 0.95em;
+	font-family: Microsoft Yahei;
+}
+
+#Box_IsQzKI {
+	margin: 0.8em 0.8em 0em 0.8em;
+	background-color: #FFF;
+	border-radius: 10px;
+	padding: 0.5em;
+}
+
+#Box_RcCp6N {
+	padding: 0em 0.8em 0em 0.8em;
+	margin: 0em 0em 0.63em 0em;
+	/*border-bottom: solid 1px #E0E0E0;*/
+	/*padding: 0.8em;*/
+	/*margin: 0.8em;*/
+	background-color: #FFF;
+    /*border-radius: 10px;*/
+}
+
+#Text_DipeV3 {
+	left: 70%
+}
+
+#Text_tDuX52 {
+	left: 60%
+}
+
+#Text_q3tXAc {
+	right: 1.1em;
+}
+.li {
+	margin-top: 0.5em;
+	padding: 10px;
+	background-color: #FFF;
+	border-radius: 10px;
+	/* 	box-shadow: 2px 2px 3px #aaaaaa; */
+	border: solid 1px #C0C0C0;
+}
+
+.line {
+	margin-bottom: 10px;
+}
+
+.right_text_title {
+	position: absolute;
+	left: 45%;
+}
+
+.right_text_value {
+	position: absolute;
+	right: 0.5em;
+}
+
+.uinn-at4 {
+	padding: 2.69em 0.5em 0em !important;
+}
+
+.uinn-4a {
+	padding-top: 2.69em !important;
+}
+
+.uinn-a4 {
+	padding: 2.69em .5em 0 !important;
+}
+
+.c-blu-rank {
+	background-color: #a0bbed;
+}
+
+.t-blu-rank {
+	color: #2d4572;
+}
+
+.uinn-t-rank {
+	padding-top: 0.625em;
+}
+
+.uinn-a6 {
+	padding: 1em 0.65em 0 0.65em;
+}
+
+.t-gra5 {
+	color: #686868;
+}
+
+.umar-fr1 {
+	margin-top: -1px;
+}
+
+.ulev-app1 {
+	font-size: 0.875em;
+}
+
+.uinn-at4 {
+	padding: 2.69em 0.5em 0em !important;
+}
+
+.uinn-4a {
+	padding-top: 2.69em !important;
+}
+
+.uinn-a4 {
+	padding: 2.69em .5em 0 !important;
+}
+
+.c-blu-rank {
+	background-color: #a0bbed;
+}
+
+.t-blu-rank {
+	color: #2d4572;
+}
+
+.uinn-t-rank {
+	padding-top: 0.625em;
+}
+
+.uw-rank {
+	width: 20%;
+}
+
+.uw-rank2 {
+	width: 26%;
+}
+
+.uinn-a6 {
+	padding: 1em 0.65em 0 0.65em;
+}
+
+.t-gra5 {
+	color: #686868;
+}
+
+.umar-fr1 {
+	margin-top: -1px;
+}
+
+.uinn-a1 {
+	padding: 0.525em 0;
+	margin: 0 0.625em;
+}
+
+.fs9 {
+	font-size: 0.95em;
+}
+/*GUI*/
+.gui-user-con {
+	width: 63.7%;
+	margin-left: 0.1em;
+}
+
+.gui-user-tite {
+	width: 36%;
+	text-align: right;
+}
+
+.gui-s-t {
+	font-size: 1em;
+	color: #666666;
+	font-family: Microsoft Yahei;
+	border: none;
+}
+
+.gui-search:focus {
+	border: none;
+	outline: none;
+}
+
+.gui-i {
+	width: 0.05em;
+	height: 1.5em;
+	display: block;
+	margin-top: 0.25em;
+	/*background:-webkit-gradient(linear,0% 15%, 0% 80%, from(#F4F4F4), to(#F4F4F4), color-stop(0.5,#888888));*/
+	background: linear-gradient(#F4F4F4, #cecece, #F4F4F4)
+}
+
+.gui-s-c {
+	font-size: 0.8em;
+	font-weight: 100;
+	line-height: 1.5em;
+	padding: 0.6em 0 0.5em 0.5em;
+}
+
+.gui-s-btn {
+	color: #333;
+	width: 2.6em;
+	margin-right: 0.5em
+}
+
+.gui-list-top {
+	height: 2.9em;
+	width: calc(100% - 1.6em);
+	margin: 0 0.8em;
+	background-repeat: repeat-x;
+	background-position: left top;
+	background-image: url(img/list-top.png);
+	position: absolute;
+	-moz-box-shadow: 0px 0.25em 0.25em #B5B5B5;
+	-webkit-box-shadow: 0px 0.25em 0.25em #B5B5B5;
+	box-shadow: 0px 0.25em 0.25em #B5B5B5;
+}
+
+.gui-tariff-date {
+	width: 33.3333%;
+	text-align: center;
+	color: #359c83
+}
+
+.gui-tariff-date p {
+	padding: 0.2em 0
+}
+
+.gui-tariff-d {
+	width: 33.3333%;
+	display: flex;
+	justify-content: center;
+	align-items: Center;
+}
+
+.gui-body {
+	position: relative;
+}
+
+.gui-bgx {
+	width: calc(100% - 1.6em);
+	margin: 0 0.8em;
+	height: 0.3em;
+	background-color: #44af95;
+	border-radius: 2em;
+}
+
+.gui-wrapper {
+	width: calc(100% - 1.6em);
+	padding-bottom: 0.8em;
+	margin: 0 0.8em;
+	/* 	margin-top: 1.5em; */
+	background-color: #ffffff;
+	-moz-box-shadow: 0px 0.25em 0.25em #B5B5B5;
+	-webkit-box-shadow: 0px 0.25em 0.25em #B5B5B5;
+	box-shadow: 0px 0.25em 0.25em #B5B5B5;
+}

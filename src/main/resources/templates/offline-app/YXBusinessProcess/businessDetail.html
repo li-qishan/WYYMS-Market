@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html
+        class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <!--<link rel="stylesheet" href="css/font-awesome.min.css">-->
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css//ui-base.css">
+    <link rel="stylesheet" href="css//ui-color.css">
+    <link rel="stylesheet" href="css//uap.icon.css">
+    <link rel="stylesheet" href="css//uap.control.css">
+    <link rel="stylesheet" href="css/businessDetail.css">
+
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/swiper.min.js"></script>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="">
+<div class="uh ub ub-pc ub-ac ub-f1 bc-head" data-control="HEADER"
+     id="Header">
+
+    <!-- <div class="fa fa-1g ub-img1 " id="Icon">
+        <img id="back" class="returnPng" src="css/img/returnNoline.png">
+    </div> -->
+    <div>
+        <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">流程详细信息</h1>
+    </div>
+
+    <!-- <div class="fa fa-1g ub-img1 " id="More">
+        <img id="back" class="returnPng" src="./css/img/icon-more.png">
+    </div> -->
+
+</div>
+
+<div class="" data-control="CONTENT" id="ScrollContent_9HJwfp">
+    <div class="scrollbox">
+        <div class="ub" data-control="BOX" id="Box_WdAW4r">
+            <div data-control="TEXT" class="ub-f2" id="title">当前工单编号：</div>
+            <div data-control="TEXT" class="ub-f4" id="Text_kxHJDJ"
+                 data-bind="text:APPNO"></div>
+        </div>
+        <div class="" data-control="CUSTOMLISTVIEW"
+             id="CustomListView_KE5wR5">
+            <div id="detailData">
+                <ul data-bind="collection:$collection">
+                    <li class="li" v-for="item in dataList">
+                        <div class="ub ub-f1" data-control="BOX" id="Box_aZyjds">
+                            <div data-control="TEXT" class="ub-f4" id="Text_IaTc8F"
+                                 data-bind="text:WORKNAME">{{item.WORKNAME}}
+                            </div>
+                            <div data-control="TEXT" class="ub-f4" style="text-align:right" id="Text_8D191y"
+                                 data-bind="text:STATE">{{item.STATE}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="ub" data-control="BOX" id="Box_blnk9E">
+                            <div data-control="TEXT" class="ub-f1" id="title">处理部门：</div>
+                            <div data-control="TEXT" class="ub-f2" id="Text_gDb04u"
+                                 data-bind="text:DEALDEPT">{{item.DEALDEPT}}
+                            </div>
+                        </div>
+                        <div class="ub" data-control="BOX" id="Box_blnk9E">
+                            <div data-control="TEXT" class="ub-f1" id="title">处理人：</div>
+                            <div data-control="TEXT" class="ub-f2" id="Text_23epQu"
+                                 data-bind="text:DEALPERSON">{{item.DEALPERSON}}
+                            </div>
+                        </div>
+                        <div class="ub" data-control="BOX" id="Box_NTOuxJ">
+                            <div data-control="TEXT" class="ub-f2" id="title">创建时间：</div>
+                            <div data-control="TEXT" class="ub-f4" id="Text_YYPk8o"
+                                 data-bind="text:CREATETIME">{{item.CREATETIME}}
+                            </div>
+                        </div>
+                        <div class="ub" data-control="BOX" id="Box_FEEMWj">
+                            <div data-control="TEXT" class="ub-f2" id="title">完成时间：</div>
+                            <div data-control="TEXT" class="ub-f4" id="Text_SgUeFV"
+                                 data-bind="text:FINISHEDTIME">{{item.FINISHEDTIME}}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/businessDetail.js">
+
+</script>
+
+</body>
+
+</html>

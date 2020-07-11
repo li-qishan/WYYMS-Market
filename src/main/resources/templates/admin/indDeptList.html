@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>部门配置</title>
+
+    <link rel="stylesheet" type="text/css" href="/web/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/web/css/layer/skin/default/layer.css">
+    <script type="text/javascript" src="/web/js/jquery.js"></script>
+    <script type="text/javascript" src="/web/js/vue.min.js"></script>
+    <script type="text/javascript" src="/web/js/layer.min.js"></script>
+    <style type="text/css">
+        .forminfo li label {
+            width: 130px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".tiptop a").click(function () {
+                $(".tip").fadeOut(200);
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">系统配置</a></li>
+        <li><a href="#">部门配置</a></li>
+    </ul>
+</div>
+<div class="rightinfo" id="deptDiv">
+    <div class="tools">
+        <ul class="toolbar">
+            <li onclick="add()"><span><img src="../../web/images/t01.png"/></span>添加</li>
+            <li onclick="edit()"><span><img src="../../web/images/t02.png"/></span>修改</li>
+            <li onclick="del()"><span><img src="../../web/images/t03.png"/></span>删除</li>
+        </ul>
+    </div>
+    <table class="tablelist">
+        <thead>
+        <tr>
+            <th width="80px;">
+                <!--<input id="cbAll" type="checkbox" onclick="selectAll()" />全选-->
+            </th>
+            <th width="100px;">部门编码</th>
+            <th>部门名称</th>
+            <th>部门简称</th>
+            <th>部门级别</th>
+            <th>父级部门编码</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in deptList">
+            <td>
+                <input name="cbDeptNo" type="checkbox" v-on:click="selectSingle(item)" v-bind:value="item.DEPT_NO"/>
+            </td>
+            <td>{{item.DEPT_NO}}</td>
+            <td>{{item.DEPT_NAME}}</td>
+            <td>{{item.SHORT_NAME}}</td>
+            <td>{{item.DIM_NAME}}</td>
+            <td>{{item.PARENT_NO}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div id="detail" class="tip" style="width:700px;height:400px;">
+        <div class="tiptop"><span id="detailSpan"></span><a></a></div>
+        <div class="tipform">
+            <form id="detailForm">
+                <ul class="forminfo" style="padding-top: 30px;width: 580px;margin: auto">
+                    <li>
+                        <label><i>部门编码：</i></label>
+                        <input id="deptNoInput" name="deptNo" class="dfinput" v-model="deptObj.DEPT_NO"/>
+                    </li>
+                    <li>
+                        <label><i>部门名称：</i></label>
+                        <input type="text" name="deptName" class="dfinput" v-model="deptObj.DEPT_NAME"/>
+                    </li>
+                    <li>
+                        <label><i>部门简称：</i></label>
+                        <input type="text" name="shortName" class="dfinput" v-model="deptObj.SHORT_NAME"/>
+                    </li>
+                    <li>
+                        <label><i>部门级别：</i></label>
+                        <select id="indDimSel" name="indDimId" class="dfinput" v-model="deptObj.IND_DIM_CODE">
+                            <option v-for="itemDim in dimList" :value="itemDim.IND_DIM_CODE">
+                                {{itemDim.DIM_NAME}}
+                            </option>
+                        </select>
+                    </li>
+                    <li>
+                        <label><i>父级部门编码：</i></label>
+                        <input type="text" name="parentNo" class="dfinput" v-model="deptObj.PARENT_NO"/>
+                    </li>
+                    <li style="margin-top: 10px;text-align: center;">
+                        <input type="button" class="sure" value="确定" onclick="vm.submitForm()"/>
+                        <input type="button" class="cancel" value="取消"/>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function add() {
+        // 修改提示窗口名称
+        document.getElementById("detailSpan").innerText = "添加部门";
+        // 清空表单
+        clearFormData();
+        $("#deptNoInput").attr("readonly", "");
+        document.getElementById("deptNoInput").style.background = "#ffffff";
+        // 弹出提示窗口
+        $(".tip").fadeIn(200);
+    }
+
+    function edit() {
+        var cbs = document.querySelectorAll("input[type=checkbox]:checked");
+        if (cbs.length == 0) {
+            // 提示请选择一条数据
+            //layer.
+            return;
+        }
+
+        var deptNo = "";
+        for (item in cbs) {
+            if (cbs[item].checked) {
+                deptNo = cbs[item].value;
+                break;
+            }
+        }
+
+        // 表单赋值
+        vm.bindForm(deptNo);
+        // 修改提示窗口名称
+        document.getElementById("detailSpan").innerText = "修改部门";
+        // 设置部门编码不可修改
+        $("#deptNoInput").attr("readonly", "readonly");
+        document.getElementById("deptNoInput").style.background = "#dddddd";
+        // 弹出提示窗口
+        $(".tip").fadeIn(200);
+    }
+
+    function del() {
+        // 判断是否有勾选
+        var cbs = document.querySelectorAll("input[type=checkbox]:checked");
+
+        if (cbs.length == 0) {
+            // 提示请选择一条数据
+            return;
+        }
+
+        var deptNos = "";
+        for (item in cbs) {
+            if (cbs[item].checked) {
+                deptNos += cbs[item].value + ",";
+            }
+        }
+
+        deptNos = deptNos.substr(0, deptNos.length - 1);
+        // 弹出提示
+        // 删除
+        vm.delDept(deptNos);
+    }
+
+    function selectAll() {
+        var cbAll = document.getElementById("cbAll");
+        var cbDeptNo = document.getElementsByName("cbDeptNo");
+
+        if (cbAll.checked == true) {
+            if (cbDeptNo.length) {
+                for (var i = 0; i < cbDeptNo.length; i++) {
+                    cbDeptNo[i].checked = true;
+                }
+            }
+        } else {
+            if (cbDeptNo.length) {
+                for (var i = 0; i < cbDeptNo.length; i++) {
+                    cbDeptNo[i].checked = false;
+                }
+            }
+        }
+    }
+
+    function selectSingle(item) {
+        var eles = document.querySelectorAll("input[type=checkbox]:checked");
+
+        for (i in eles) {
+            if (eles[i].value == item.DEPT_NO) {
+                eles[i].checked = true;
+            } else {
+                eles[i].checked = false;
+            }
+        }
+    }
+
+    function clearFormData() {
+        $("#detailForm")[0].reset();
+    }
+    var vm = new Vue({
+        el: '#deptDiv',
+        data: {
+            deptList: [],
+            dimList: [],
+            deptObj: {}
+        },
+        mounted: function () {
+            this.load();
+            this.reload();
+        },
+        methods: {
+            load: function () {
+                $.get("/indsys/dimList", function (r) {
+                    vm.dimList = r.result;
+                });
+            },
+            reload: function () {
+                $.get("/indsys/deptList", function (r) {
+                    vm.deptList = r.result;
+                });
+            },
+            submitForm: function () {
+                var formData = $('#detailForm').serialize();
+                formData = decodeURIComponent(formData, true);
+                $.ajax({
+                    type: "GET",
+                    url: "/indsys/saveDept?" + formData,
+                    success: function (r) {
+                        if (r.result == "1") {
+                            vm.reload();
+                            $(".tip").fadeOut(200);
+                        } else {
+                            alert("保存失败！请联系管理员");
+                        }
+                    }
+                });
+            },
+            bindForm: function (deptNo) {
+                $.ajax({
+                    type: "POST",
+                    url: "/indsys/queryDept",
+                    data: {deptNo: deptNo},
+                    success: function (r) {
+                        vm.deptObj = r.result[0];
+                    }
+                });
+            },
+            delDept: function (deptNos) {
+                $.ajax({
+                    type: "POST",
+                    url: "/indsys/deleteDept",
+                    data: {deptNos: deptNos},
+                    success: function (r) {
+                        if (r.result == "1") {
+                            vm.reload();
+                        }
+                    }
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>

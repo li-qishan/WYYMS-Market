@@ -1,0 +1,62 @@
+<form class="easyui-form" method="post" id="paramForm" data-options="novalidate:true">
+    <div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+    <table class="table_self" width="100%"    style="border-collapse:separate; border-spacing:0px 15px;">
+        <tr >
+            <td align="right" style="font-size: 13px">
+                <div>
+                    <span>序号：</span>
+                </div>
+            </td>
+            <td align="left">
+                <div>
+                    <input id="orderNum" type="text" name="ORDER_NUM" class="easyui-numberbox"
+                           data-options="required:true,validType:'maxLength[10]'" style="width:250px;height:33px;"/>
+                    <i style='margin-left:70px'>请输入数字</i>
+                </div>
+            </td>
+        </tr >
+        <tr>
+            <td align="right" style="font-size: 13px">
+                <div>
+                    <span>参数标识：</span>
+                </div>
+            </td>
+            <td>
+                <div align="left">
+                    <input id="codeaaa" type="text" name="CODE" class="easyui-textbox"
+                           data-options="required:true,validType:'maxLength[100]'"style="width:250px;height:33px;" />
+                    <i style='margin-left:70px'>请输入英文标识</i>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" style="font-size: 13px">
+                <div>
+					<span>参数名称：</span>
+                </div>
+            </td>
+            <td align="left">
+                <div>
+                    <input id="codeName" type="text" name="CODE_NAME" class="easyui-textbox"
+                           data-options="required:true,validType:'maxLength[1000]'" style="width:250px;height:33px;" />
+                    <i style='margin-left:70px'>请输入名称</i>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div align="right" style="font-size: 13px">
+                    <span>参数说明：</span>
+                </div>
+            </td>
+            <td align="left">
+                <div>
+                    <input id="remark" type="text" name="REMARK" class="easyui-textbox"
+                           data-options="required:false,validType:'maxLength[254]'" style="width:250px;height:33px;"/>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+    </div>
+</form>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html
+	class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<link rel="stylesheet" href="/static/mobile/fonts/font-awesome.min.css">
+<link rel="stylesheet" href="/static/mobile/ui-box.css">
+<link rel="stylesheet" href="/static/mobile/ui-base.css">
+<link rel="stylesheet" href="/static/mobile/ui-color.css">
+<link rel="stylesheet" href="/static/mobile/uap.icon.css">
+<link rel="stylesheet" href="/static/mobile/uap.control.css">
+<link rel="stylesheet" href="/app/YXPhoneChange/css/renew.css">
+<!-- <link rel="stylesheet" href="css/switch-buttons.css"> -->
+	<script src="/static/web/js/jquery-1.10.2.js"></script>
+	<script src="/static/web/js/vue.min.js"></script>
+	<script src="/app/YXPhoneChange/js/swiper.min.js"></script>
+
+</head>
+
+<body class="" ontouchstart>
+	<div class="uh bc-head  ubb bc-border" data-control="HEADER"
+		id="Header_Rn8cJU">
+		<div class="ub">
+			<div class="fa fa-1g ub-img1 " id="Icon">
+				<img class="returnPng" src="/app/YXPhoneChange/css/img/returnNoline.png">
+			</div>
+			<h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">联系人更新</h1>
+			<div class="nav-btn" id="nav-right">
+				<div class="fa  fa-1g  ub-img1"></div>
+			</div>
+		</div>
+	</div>
+	<div class="" data-control="CONTENT" id="ScrollContent_YwgBup">
+		<div class="scrollbox" style="padding: 15px;">
+			<!-- 			<div class="box_bounce ub ub-ver ub-pc"> -->
+			<!-- 				<div class="ub-f1"></div> -->
+			<!-- 				<div class="bounce_status">下拉更新......</div> -->
+			<!-- 				<div class="bounce_status">松手更新......</div> -->
+			<!-- 				<div class="bounce_status">更新中......</div> -->
+			<!-- 			</div> -->
+			<div class="userInfo" id="userInfo">
+				<div class="ub line" data-control="BOX" id="">
+					<div class="ub-f1" data-control="BOX" id="">
+						<div data-control="TEXT" class="title" id="Text_Anweba">用户名</div>
+					</div>
+					<div class="ub-f3" data-control="BOX" id="">
+						<div data-control="TEXT" class="value" id="user_consName"
+							data-bind=""></div>
+					</div>
+				</div>
+				<div class="ub line" data-control="BOX" id="">
+					<div class="ub-f1" data-control="BOX" id="">
+						<div data-control="TEXT" class="title" id="Text_Anweba">用户号</div>
+					</div>
+					<div class="ub-f3" data-control="BOX" id="">
+						<div data-control="TEXT" class="value" id="user_consNo"
+							data-bind=""></div>
+					</div>
+				</div>
+				<div class="ub line" data-control="BOX" id="">
+					<div class="ub-f1" data-control="BOX" id="">
+						<div data-control="TEXT" class="title" id="Text_Anweba">自定义编号</div>
+					</div>
+					<div class="ub-f3" data-control="BOX" id="">
+						<div data-control="TEXT" class="value" id="user_code" data-bind=""></div>
+					</div>
+				</div>
+				<div class="ub line" data-control="BOX" id="">
+					<div class="ub-f1" data-control="BOX" id="">
+						<div data-control="TEXT" class="title" id="Text_Anweba">用电类别</div>
+					</div>
+					<div class="ub-f3" data-control="BOX" id="">
+						<div data-control="TEXT" class="value" id="user_type" data-bind=""></div>
+					</div>
+				</div>
+				<div class="ub line" data-control="BOX" id="">
+					<div class="ub-f1" data-control="BOX" id="">
+						<div data-control="TEXT" class="title" id="Text_Anweba">用电地址</div>
+					</div>
+					<div class="ub-f3" data-control="BOX" id="">
+						<div data-control="TEXT" class="value" id="user_addr" data-bind=""></div>
+					</div>
+				</div>
+				<div class="ub line" data-control="BOX" id="">
+					<div class="ub-f1" data-control="BOX" id="">
+						<div data-control="TEXT" class="title" id="Text_Anweba">供电单位</div>
+					</div>
+					<div class="ub-f3" data-control="BOX" id="">
+						<div data-control="TEXT" class="value" id="org_name" data-bind=""></div>
+					</div>
+				</div>
+				<div class="ub brnGroup" data-control="BOX" id="brnGroup">
+					<div class="ub-f1 tx-c btn" data-control="BOX" id="btnAdd" >新增</div>
+					<div class="ub-f1 tx-c btn" data-control="BOX" id="btnUpdate">修改</div>
+					<div class="ub-f1 tx-c" data-control="BOX" id="btnDelete">删除</div>
+				</div>
+			</div>
+<!-- 			<div id="listview" class="ubt sc-border sc-bg"></div> -->
+			<div class="" data-control="CUSTOMLISTVIEW"
+				id="CustomListView_4sKwrQ">
+				<ul >
+					<li data-control-scope="CustomListView_4sKwrQ" mvvm-scope="" v-for="item in dataList">
+						<div class="ub line" data-control="BOX" id="">
+							<div class="ub-f1" data-control="BOX" id="">
+								<input type="checkbox" name="check" id="tt"
+									class="gcs-checkbox checked"> <label class="label"
+									for="tt"></label>
+							</div>
+							<div class="ub-f4 phone_type" data-control="BOX" id="">
+								<div class="title" id="Text_Anweba" style="position: relative;top: -8px"
+									data-bind="text:CONTACT_TYPE">{{item.CONTACT_TYPE}}</div>
+							</div>
+							<div class="ub-f4" data-control="BOX" id="">
+								<div data-control="TEXT" class=""
+									style="font-size: 0.825em; color: #807D7D;" id="mobile"
+									data-bind="text:MOBILE">{{item.MOBILE}}</div>
+							</div>
+							<div class="ub-f1 tx-r selectBox" data-control="BOX" id="selectBox">
+								<div data-control="TEXT" style="display: none;" class="consNo"
+									id="consNoHid" data-bind="text:CONS_NO">{{item.CONS_NO}}</div>
+								<div data-control="TEXT" style="display: none;" class="consNo"
+									id="contactIdHid" data-bind="text:CONTACT_ID">{{item.CONTACT_ID}}</div>
+								<label class="switch-btn no-radius "> 
+									<input class="checked-switch" type="checkbox" id="switchBox"
+									 onchange="switchBoxChange(this,event)" data-bind="checked:integer(COST_PHONE)" v-model="item"/><!--   -->
+								 	<span class="text-switch" data-yes="订阅" data-no="未订阅"></span>
+								 	<span class="toggle-btn"></span>
+								</label>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div style="height: 100px;"></div>
+	</div>
+
+	<div class="ub mobile" id="mobileSelect">
+		<div style="width: 33%" class="mobileText">
+			<img alt="" class="selIcon user" src="/app/YXPhoneChange/css/img/user_active.png">
+			<label class="phone">电气联系人</label>
+		</div>
+		<div style="width: 34%" class="mobileText">
+			<img alt="" class="selIcon money" src="/app/YXPhoneChange/css/img/money.png"> <label
+				class="phone">账务联系人</label>
+		</div>
+		<div style="width: 33%" class="mobileText ">
+			<img alt="" class="selIcon elec" src="/app/YXPhoneChange/css/img/elec.png"> <label
+				class="phone">停送电联系人</label>
+		</div>
+	</div>
+	<div class="mask" id="mask">
+		<div class="delConfirm" id="delConfirm">
+			<p style="text-align: center; margin-bottom: 10%;">提示</p>
+			<p id="content" style="text-align: center;">确认要删除当前选中的联系人吗？</p>
+			<div class=" ub delBtnGroup">
+				<div id="delSubmit" class="btn tx-c">确定</div>
+				<div id="delCancel" class="btn tx-c">取消</div>
+			</div>
+		</div>
+	</div>
+	<div class="mask" id="urgeMask">
+		<div class="delConfirm" id="urgeConfirm">
+			<p style="text-align: center; margin-bottom: 10%;">提示</p>
+			<p style="text-align: center;">确认要设置当前选中的手机号码为催费短信接收号码吗？</p>
+			<div class=" ub delBtnGroup">
+				<div id="urgeSubmit" class="btn tx-c">确定</div>
+				<div id="urgeCancel" class="btn tx-c">取消</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/app/YXPhoneChange/js/renew.js"></script>
+
+	<script type="text/javascript">
+        // 选框
+        function switchBoxChange(value, e) {
+            var _ = this;
+            if (value.checked) {
+                var lineDataOrder = value.parentElement.parentElement.parentElement.children[2].children[0];
+                var checkedMobile = lineDataOrder.innerHTML;
+                // 设置催费短信
+                _.commitOpera("2", "1", checkedMobile);
+
+                // var mask = document.getElementById("urgeMask");
+                // mask.style.display = "block";
+                // // 阻止冒泡
+                // // var event = e||window.event;
+                // if (e || e.stopPropagation()) {
+                // e.stopPropagation();
+                // } else {
+                // e.cancelBubble = true;
+                // }
+            } else {
+                // 取消设置催费短信
+                alert(" 取消设置催费短信");
+            }
+        }
+
+	</script>
+
+</body>
+
+</html>

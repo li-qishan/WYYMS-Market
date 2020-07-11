@@ -1,0 +1,217 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>详情</title>
+
+
+
+
+    <script type="text/javascript" src="/jquery-easyui-1.4.5/json2.js"></script>
+    <script src="/web/js/jquery-1.10.2.js"></script>
+
+    <script type="text/javascript" src="/web/js/layer.min.js"></script>
+
+    <script type="text/javascript" src="/utils/password.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="/jquery-easyui-1.4.5/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="/jquery-easyui-1.4.5/themes/icon.css"/>
+    <script type="text/javascript" src="/jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+
+
+    <link href="/web/css/Style1.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/web/js/Common.js"></script>
+    <script type="text/javascript" src="/utils/extend-methods.js"></script>
+    <script type="text/javascript" src="/utils/validate.js"></script>
+    <script type="text/javascript" src="/app/js/menu.js"></script>
+
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        html {
+            padding: 50px;
+        }
+        /* 两列右侧自适应布局 */
+        .container {
+            margin: 0;
+            padding: 0;
+        }
+
+        .leftPart {
+            position: relative;
+            float: left;
+            width: 190px;
+            margin-right: -190px;
+            height: 100%;
+        }
+
+        .rightPart {
+            float: right;
+            width: 100%;
+        }
+
+        .g-mn1c {
+            margin-left: 190px;
+            height: 100%;
+        }
+
+        .leftPart {
+            background: url(/Images/projectProgress/leftbg.png) bottom;
+            background-repeat: no-repeat;
+            background-color: #117670;
+        }
+
+        .leftPart {
+            font-size: 18px;
+            color: white;
+        }
+
+            .leftPart ul li {
+                border: 1px solid #117670;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+                .leftPart ul li:hover {
+                    opacity: 0.6;
+                    border: 1px solid #1CB1AB;
+                }
+
+        .selected {
+            border: 1px solid #1CB1AB;
+            background-color: #1CB1AB;
+        }
+
+        .messageClass {
+            background: url(/Images/systemindex/messageBg.png);
+            background-size: 100% 100%;
+            width: 155px;
+            height: 36px;
+            display: inline-block;
+            position: absolute;
+            top: 20px;
+            color: #FFFFFF;
+            font-size: 18px;
+            line-height: 36px;
+            text-align: center;
+        }
+
+
+
+        .countStyle {
+            color: #F5B805;
+        }
+
+        .countStyleSelect {
+            color: red;
+        }
+        .tabs {
+            border-color: #50ADA3;
+        }
+
+        .panel-body-noheader {
+           border-top-width: 0px; 
+        }
+    </style>
+</head>
+<body style=" height:100%;width:100%;padding:0px">
+    <div class="easyui-layout" style="width:100%;height:100%;" id="mainlayout" data-options="fit:true">      
+        <div id="p" data-options="region:'west'" title="功能导航" style="width:220px; padding: 2px;overflow-x:hidden">
+            <div id="projectMenu" class="easyui-accordion" style="height:auto;width:200px;margin:0 auto" data-options="border:false,animate:false">
+            </div>
+        </div>
+        <div data-options="region:'center',iconCls:'icon-ok'">
+            <div id="maintabs" class="easyui-tabs" style="width: 50px;" data-options="fit:true,border:false,tools:'#tab-tools'">
+            </div>
+
+            <div id="mm" class="easyui-menu" style="width: 150px;">
+                <div id="mm-tabupdate">
+                    刷新
+                </div>
+                <div class="menu-sep">
+                </div>
+                <div id="mm-tabclose">
+                    关闭
+                </div>
+                <div id="mm-tabcloseall">
+                    全部关闭
+                </div>
+                <div id="mm-tabcloseother">
+                    除此之外全部关闭
+                </div>
+                <div class="menu-sep">
+                </div>
+                <div id="mm-tabcloseright">
+                    当前页右侧全部关闭
+                </div>
+                <div id="mm-tabcloseleft">
+                    当前页左侧全部关闭
+                </div>
+                <div class="menu-sep">
+                </div>
+                <div id="mm-exit">
+                    退出
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="tab-tools" style="border: 0;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-reload'" onclick="refreshTab()"></a>
+    </div>
+    <script type="text/javascript">
+        $(window).resize(function () {
+            resizeTabFunc();
+        });
+     
+        function resizeTabFunc() {
+            $("#mainlayout").layout("resize");
+
+            //$('#maintabs').panel({
+            //    width: "100%",
+            //    height: $(this).height() - 120
+            //});
+            //设置布局大小
+            //var width = $('#maintabs').width() - 60;
+            //var height = $('#maintabs').height() - 250;
+        }
+        $(function () {
+            resizeTabFunc();
+            $.getJSON('/sys/menu/getUserMenu?r=' + (new Date()).getTime(), function (data) {
+                //if (data.IsOK == false) {
+                //    $.messager.alert('提示信息', '当前登录用户没有分配角色,请联系管理员！', 'error', function () {
+                //        window.location = "/default.aspx";
+                //    });
+                //}
+                //else {
+                _menus = data;
+                if (_menus.length == 0) {
+                    ////$.messager.alert('提示信息', '当前登录用户没有分配菜单,请联系管理员！', 'error', function () {
+                    ////    window.location = "/SysManage/Login";
+                    ////});
+                    return;
+                }
+                InitMenu();
+                tabEvent();
+                tabRightEvent();
+                $.parser.parse();
+                //}
+            });
+            //$('#maintabs').panel({
+            //    width: "100%",
+            //    height: $(this).height() - 120
+            //});
+            //GetProjectCount();
+            //CreateMenuTree(0);
+        });
+
+    </script>
+
+
+
+</body>
+</html>
+
+
+

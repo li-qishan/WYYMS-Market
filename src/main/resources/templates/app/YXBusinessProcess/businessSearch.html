@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html
+        class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="/static/mobile/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/mobile/ui-box.css">
+    <link rel="stylesheet" href="/static/mobile/ui-base.css">
+    <link rel="stylesheet" href="/static/mobile/ui-color.css">
+    <link rel="stylesheet" href="/static/mobile/uap.icon.css">
+    <link rel="stylesheet" href="/static/mobile/uap.control.css">
+    <link rel="stylesheet" href="/app/YXBusinessProcess/css/businessSearch.css">
+    <link rel="stylesheet" href="/app/YXBusinessProcess/css/userList.css">
+
+    <script src="/static/web/js/jquery-1.10.2.js"></script>
+    <script src="/static/web/js/vue.min.js"></script>
+    <script src="/app/YXPhoneChange/js/swiper.min.js"></script>
+</head>
+
+<body class="" ontouchstart>
+<div class="uh ub ub-pc ub-ac ub-f1 bc-head" data-control="HEADER"
+     id="Header">
+    <!--  <div class="fa fa-1g ub-img1 " id="Icon">
+          <img class="returnPng" src="/app/YXBusinessProcess/css/img/returnNoline.png">
+      </div>-->
+
+    <div class="uinput ub bc-border uba ub-f1" data-control="SEARCH"
+         id="Search">
+        <div class="uba bc-border bc-text gui-s-t">
+            <!-- 	            <div class="text">请选择</div> -->
+            <!-- 	            <div class="icon"></div> -->
+            <select id="searchSelect" selectedindex="0">
+                <option value=1>户号</option>
+                <option value=4>工单号</option>
+            </select>
+        </div>
+        <input style="margin-left: 20px;" id="searchInput"
+               placeholder="请输入查询条件" type="tel" value=""
+               class="ub-f1 ub ub-pc ub-ac gui-search" data-control-scope="Search"
+               autocomplete="off"> <span class="gui-i"></span>
+        <div class="uinn fa sc-text gui-s-c" style="color: #adadad">
+            <img class="searchPng" src="/app/YXBusinessProcess/css/img/search.png">
+        </div>
+        <div id="searchBtn" class="btn ub ub-ac bc-text-head ub-pc gui-s-btn">搜索</div>
+    </div>
+    <div class="" data-control="BOX" id="Box_0"></div>
+</div>
+<div class="" data-control="CONTENT" id="ScrollContent_fCUgYq">
+    <div class="scrollbox">
+        <!--     <div class="box_bounce ub ub-ver ub-pc">
+                <div class="ub-f1">
+                </div>
+                <div class="bounce_status">下拉更新......</div>
+                <div class="bounce_status">松手更新......</div>
+                <div class="bounce_status">更新中......</div>
+            </div> -->
+        <div class="CustomListView" data-control="CUSTOMLISTVIEW"
+             id="CustomListView_NMhIw9" data-bind="">
+            <ul data-bind="collection:$collection">
+                <li data-control-scope="CustomListView_NMhIw9" mvvm-scope=""
+                    class="li" v-for="item in dataList" @click="operate(item,$event)">
+                    <div class="ub" data-control="BOX" id="Box_jTsZSq" data-bind="">
+                        <div data-control="TEXT" class="ub-f4" id="Text_V62O9r"
+                             data-bind="text:APPNO">{{item.APPNO}}
+                        </div>
+                        <div data-control="TEXT" class="ub-f1" id="title">状态：</div>
+                        <div data-control="TEXT" class="ub-f1" id="Text_2SQosz"
+                             data-bind="text:STATE">{{item.STATE}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="ub ub-f1" data-control="BOX" id="Box_4wOlUr">
+                        <div data-control="TEXT" class="ub-f1" id="title">用户编号：</div>
+                        <div data-control="TEXT" class="ub-f3" id="Text_7w8SrK"
+                             data-bind="text:CONSNO">{{item.CONSNO}}
+                        </div>
+                        <div data-control="TEXT" class="ub-f1" id="title">用户分类：</div>
+                        <div data-control="TEXT" class="ub-f3" id="Text_QCmx2m"
+                             data-bind="text:CONSTYPE">{{item.CONSTYPE}}
+                        </div>
+                    </div>
+
+                    <div class="ub ub-f1" data-control="BOX" id="Box_4wOlUr">
+                        <div data-control="TEXT" class="ub-f1" id="title">申请编号：</div>
+                        <div data-control="TEXT" class="ub-f3" id="Text_7w8SrK"
+                             data-bind="text:APPNO">{{item.APPNO}}
+                        </div>
+                    </div> <!-- 新加 业务类型 -->
+                    <div class="ub ub-f1" data-control="BOX" id="Box_4wOlUr">
+                        <div data-control="TEXT" class="ub-f1" id="title">业务类型：</div>
+                        <div data-control="TEXT" class="ub-f3" id="Text_QCmx2m"
+                             data-bind="text:BUSINESSTYPE">{{item.BUSINESSTYPE}}
+                        </div>
+                        <!-- <div data-control="TEXT" class="ub-f1" id="Text_uNhsFH">业务子类：</div>
+                            <div data-control="TEXT" class="ub-f3" id="Text_7w8SrK" data-bind="text:CONSNO"></div> -->
+                    </div> <!-- 客户名称 -->
+                    <div class="ub ub-f1" data-control="BOX" id="Box_4wOlUr">
+                        <div data-control="TEXT" class="ub-f1" id="title">客户名称：</div>
+                        <div data-control="TEXT" class="ub-f3" id="Text_7w8SrK"
+                             data-bind="text:CONSNAME">{{item.CONSNAME}}
+                        </div>
+                    </div>
+                    <div class="ub ub-f1" data-control="BOX" id="Box_4wOlUr">
+                        <div data-control="TEXT" class="ub-f1" id="title">客户地址：</div>
+                        <div data-control="TEXT" class="ub-f3" id="Text_7w8SrK"
+                             data-bind="text:CONSADDR">{{item.CONSADDR}}
+                        </div>
+                    </div>
+
+                    <div class="ub-f1 ub" data-control="BOX" id="Box_q5jYs9">
+                        <div data-control="TEXT" class="ub-f1" id="title">受理时间：</div>
+                        <div data-control="TEXT" class="ub-f4" id="Text_MedsHV"
+                             data-bind="text:ACCEPTTIME">{{item.ACCEPTTIME}}
+                        </div>
+                    </div>
+                    <div class="ub" data-control="BOX" id="Box_yCwZ1i">
+                        <div data-control="TEXT" class="ub-f1" id="title">完成时间：</div>
+                        <div data-control="TEXT" class="ub-f4" id="Text_TYKmRR"
+                             data-bind="text:FINISHEDTIME">{{item.FINISHEDTIME}}
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+</div>
+<div class="mask" id="mask">
+    <div class="delConfirm" id="LoginoutForm">
+        <p style="text-align: center; margin-bottom: 10%;">退出登录</p>
+        <p style="text-align: center;">确定要退出当前用户吗？</p>
+        <div class=" ub delBtnGroup">
+            <div id="LoginOutSubmit" class="btn tx-c">确定</div>
+            <div id="LoginOutCancel" class="btn tx-c">取消</div>
+        </div>
+    </div>
+</div>
+<!--<script src="js/const.js">-->
+<!---->
+<!--</script>-->
+<!--<script src="js/uap.js">-->
+<!---->
+<!--</script>-->
+<!--<script src="js/uap.control.js">-->
+<!---->
+<!--</script>-->
+<!--<script src="js/uap.scrollbox.js">-->
+<!---->
+<!--</script>-->
+<!--<script src="js/template.import.js">-->
+<!---->
+<!--</script>-->
+<!--<script src="./assets/mvvm/businessSearch.js">-->
+<!---->
+<!--</script>-->
+<script src="/app/YXBusinessProcess/js/businessSearch.js">
+
+</script>
+<!--<script src="./js/userList.js"></script>-->
+<!--<script src="./js/config.js"></script>-->
+
+<script type="text/javascript">
+    // 	window.onload = function() {}
+
+
+    function changeTab() {
+        var tabsSwiper = new Swiper('#tabs-container', {
+            speed: 500,
+            autoHeight: true,
+            observer: true,
+            observeParents: true,
+            on: {
+                slideChangeTransitionStart: function () {
+                    $(".tabs .active").removeClass('active');
+                    $(".tabs a").eq(this.activeIndex).addClass('active');
+                }
+            }
+        })
+        $(".tabs a").on('click', function (e) {
+            // alert("reload");
+            e.preventDefault()
+            $(".tabs .active").removeClass('active')
+            $(this).addClass('active')
+            tabsSwiper.slideTo($(this).index())
+            $("#CustomListView_4sKwrQ").trigger("reload", this);
+            // $("#userInfo").trigger("reload", this);
+        })
+    }
+
+</script>
+</body>
+
+</html>

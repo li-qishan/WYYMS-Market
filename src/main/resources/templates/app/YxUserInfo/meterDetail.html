@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html
+        class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="/static/mobile/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/mobile/ui-box.css">
+    <link rel="stylesheet" href="/static/mobile/ui-base.css">
+    <link rel="stylesheet" href="/static/mobile/ui-color.css">
+    <link rel="stylesheet" href="/static/mobile/uap.icon.css">
+    <link rel="stylesheet" href="/static/mobile/uap.control.css">
+    <link rel="stylesheet" href="/app/YxUserInfo/css/meterDetail.css">
+    <script src="/static/web/js/jquery-1.10.2.js"></script>
+    <script src="/static/web/js/vue.min.js"></script>
+</head>
+
+<body class="">
+<div class="uh bc-head  ubb bc-border" data-control="HEADER"
+     id="Header_MQH4G7">
+    <div class="ub">
+        <div class="" id="Icon">
+            <img class="returnPng" src="/static/mobile/img/returnNoline.png">
+        </div>
+        <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">电能表详情</h1>
+        <div class="nav-btn" id="nav-right">
+            <div class="fa  fa-1g  ub-img1"></div>
+        </div>
+    </div>
+</div>
+<div class="" data-control="CONTENT" id="ScrollContent_n2w5sg">
+    <div class="scrollbox">
+        <div class="" data-control="BOX" id="Box_IsQzKI">
+            <div data-control="TEXT" class="" id="Text_TCJE211">电能表信息</div>
+            <hr style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="ub line" data-control="BOX" id="Box_T1Wm8Q">
+                <div data-control="TEXT" class="" id="Text_HfpEVI">条形码：</div>
+                <div data-control="TEXT" class="" id="barCode">{{barCode}}</div>
+            </div>
+            <div class="ub line" data-control="BOX" id="Box_qS6khc">
+                <div data-control="TEXT" class="" id="Text_ORoYEB">综合倍率：</div>
+                <div data-control="TEXT" class="" id="tFactor" >{{tFactor}}</div>
+                <div data-control="TEXT" class="right_text_title" id="Text_8ouMLC">安装日期：</div>
+                <div data-control="TEXT" class="right_text_value" id="instDate">{{instDate}}</div>
+            </div>
+            <div class="ub line" data-control="BOX" id="Box_Yzm7hT">
+                <div data-control="TEXT" class="" id="Text_gIAEMm">上次检验日期：</div>
+                <div data-control="TEXT" class="" id="lastCheckDate">{{lastCheckDate}}</div>
+            </div>
+        </div>
+        <div class="umar-t" data-control="BOX" id="Box_RcCp6N">
+            <div data-control="TEXT" class="" id="Text_TCJEA1">运行电能表示数</div>
+            <hr style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="" data-control="CUSTOMLISTVIEW" id="CustomListView_3LsWRV">
+                <ul>
+                    <li v-for="item in dataList" class="li">
+                        <div class="uinn3" data-control="BOX" id="Box_kPYzIm">
+                            <div class="ub line" data-control="BOX" id="Box_2cBrNS">
+                                <div data-control="TEXT" class="" id="Text_A9uwhM">示数类型：</div>
+                                <div data-control="TEXT" class="" id="Text_bZtwBQ">{{item.readType}}</div>
+                                <div data-control="TEXT" class="right_text_title" id="Text_DipeV3">示数：</div>
+                                <div data-control="TEXT" class="right_text_value" id="Text_jJh6k6">{{item.readCount}}
+                                </div>
+                            </div>
+                            <div class="ub line" data-control="BOX" id="Box_Xb7MuW">
+                                <div data-control="TEXT" class="" id="Text_PRSGcY">复核标志：</div>
+                                <div data-control="TEXT" class="" id="Text_Fz9dP3">{{item.checkType}}</div>
+                            </div>
+                            <div class="ub line" data-control="BOX" id="Box_AgVNRR">
+                                <div data-control="TEXT" class="" id="Text_o8Yps9">抄表日期：</div>
+                                <div data-control="TEXT" class="" id="Text_AdgN5w">{{item.mrDate}}
+                                </div>
+                                <div data-control="TEXT" class="right_text_title" id="Text_tDuX52">用途：</div>
+                                <div data-control="TEXT" class="right_text_value" id="Text_1p6Qnt">{{item.usageCode}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="/app/YxUserInfo/js/meterDetail.js"></script>
+</body>
+
+</html>
